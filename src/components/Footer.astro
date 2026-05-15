@@ -1,15 +1,26 @@
 ---
+const year = new Date().getFullYear();
 const links = [
   { href: '#collection', label: 'Collection' },
-  { href: '#about', label: 'About' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#themes',     label: 'Themes'     },
+  { href: '#about',      label: 'About'      },
+  { href: '#contact',    label: 'Contact'    },
 ];
-const year = new Date().getFullYear();
 ---
 <footer>
-  <div class="f-logo">ZHADORE</div>
-  <div class="f-links">
-    {links.map(l => <a href={l.href}>{l.label}</a>)}
+  <div class="footer-gold-line"></div>
+  <div class="footer-body">
+    <div class="footer-left">
+      <div class="f-logo">ZHADORE</div>
+      <p class="f-tagline">Handmade. Intentional. Worn like armor.</p>
+    </div>
+    <nav class="f-links" aria-label="Footer navigation">
+      {links.map(l => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <div class="footer-right">
+      <a href="mailto:hello@zhadore.com" class="f-contact">hello@zhadore.com</a>
+      <a href="https://instagram.com/zhadore" class="f-contact">@zhadore</a>
+    </div>
   </div>
-  <div class="f-copy">© {year} ZHADORE · ALL RIGHTS RESERVED</div>
+  <p class="f-copy">© {year} ZHADORE &nbsp;·&nbsp; ALL RIGHTS RESERVED</p>
 </footer>

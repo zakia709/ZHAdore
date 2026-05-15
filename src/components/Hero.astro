@@ -1,31 +1,96 @@
 ---
-interface Props {
-  eyebrow?: string;
-  title: string;
-  titleItalic: string;
-  subtitle?: string;
-  img: string;
-  imgAlt?: string;
-}
-const {
-  eyebrow = 'A FASHION PORTFOLIO · SPRING 2026',
-  title = 'ZHA',
-  titleItalic = 'DORE',
-  subtitle = 'Dressed in darkness. Named for the hour.',
-  img,
-  imgAlt = 'Zhadore collection',
-} = Astro.props;
 ---
-<section class="hero">
-  <img class="hero-img" src={img} alt={imgAlt} />
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">{eyebrow}</div>
-    <h1 class="hero-title">{title}<em>{titleItalic}</em></h1>
-    <p class="hero-sub">{subtitle}</p>
+<section class="hero" id="hero">
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- animated gold line -->
+  <div class="hero-gold-line">
+    <svg class="hero-line-svg" viewBox="0 0 1440 3" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="transparent"/>
+          <stop offset="20%"  stop-color="#C4913A"/>
+          <stop offset="50%"  stop-color="#E8C878"/>
+          <stop offset="80%"  stop-color="#C4913A"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </linearGradient>
+      </defs>
+      <line
+        class="gold-line-path"
+        x1="0" y1="1.5" x2="1440" y2="1.5"
+        stroke="url(#goldGrad)"
+        stroke-width="1.5"
+        stroke-dasharray="1440"
+        stroke-dashoffset="1440"
+      />
+    </svg>
   </div>
+
+  <!-- 3D title -->
+  <div class="hero-content">
+    <div class="hero-text-3d" id="hero-text">
+      <div class="hero-title-wrap">
+        <span class="hero-zh">ZH</span><span class="hero-adore">ADORE</span>
+      </div>
+      <p class="hero-subtitle">A FASHION PORTFOLIO &nbsp;·&nbsp; SS 2026</p>
+    </div>
+  </div>
+
+  <!-- scroll hint -->
   <div class="hero-scroll">
     <div class="hero-scroll-line"></div>
     <span>SCROLL</span>
   </div>
 </section>
+
+<script>
+  // ── Particle canvas
+  const canvas = document.getElementById('particle-canvas') as HTMLCanvasElement;
+  const ctx    = canvas.getContext('2d')!;
+
+  function resizeCanvas() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas, { passive: true });
+
+  type Particle = { x: number; y: number; vx: number; vy: number; r: number; a: number; };
+  const particles: Particle[] = Array.from({ length: 60 }, () => ({
+    x:  Math.random() * window.innerWidth,
+    y:  Math.random() * window.innerHeight,
+    vx: (Math.random() - .5) * .28,
+    vy: (Math.random() - .5) * .28,
+    r:  Math.random() * 1.8 + .3,
+    a:  Math.random() * .45 + .08,
+  }));
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > canvas.width)  p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(196,145,58,${p.a})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+
+  // ── Mouse parallax tilt
+  const heroEl   = document.getElementById('hero')!;
+  const heroText = document.getElementById('hero-text')!;
+
+  heroEl.addEventListener('mousemove', e => {
+    const r   = heroEl.getBoundingClientRect();
+    const dx  = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
+    const dy  = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
+    heroText.style.transform = `rotateY(${dx * 8}deg) rotateX(${-dy * 8}deg)`;
+  });
+  heroEl.addEventListener('mouseleave', () => {
+    heroText.style.transform = 'rotateY(0deg) rotateX(0deg)';
+  });
+</script>

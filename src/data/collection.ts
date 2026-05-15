@@ -1,163 +1,74 @@
-export interface Piece {
-  aspectClass: string;
-  img: string;
+export interface PhotoSlot {
+  id: string;
   alt: string;
-  accent: 'al-gold' | 'al-silver' | 'al-cream';
-  tag?: { text: string; type: 'tag-new' | 'tag-sig' | 'tag-bts' };
-  theme: string;
+  src?: string;
+}
+
+export interface Theme {
+  id: string;
   name: string;
-  detail: string;
+  subtitle: string;
+  style: 'bae-cay' | 'business' | 'extravagent';
+  photos: PhotoSlot[];
 }
 
-export interface Row {
-  gridClass: string;
-  pieces: Piece[];
-}
-
-export interface Look {
-  eyebrow: string;
-  title: string;
-  titleItalic: string;
-  desc: string;
-  rows: Row[];
-}
-
-export const stats = [
-  { n: '10', l: 'PIECES' },
-  { n: '03', l: 'LOOKS' },
-  { n: '04', l: 'MODELS' },
-  { n: "'26", l: 'SEASON' },
+export const themes: Theme[] = [
+  {
+    id: 'bae-cay',
+    name: 'BAE-CAY',
+    subtitle: 'Sun-kissed. Untamed. Yours.',
+    style: 'bae-cay',
+    photos: [
+      { id: 'bae-1', alt: 'BAE-CAY look 1' },
+      { id: 'bae-2', alt: 'BAE-CAY look 2' },
+      { id: 'bae-3', alt: 'BAE-CAY look 3' },
+      { id: 'bae-4', alt: 'BAE-CAY detail' },
+      { id: 'bae-5', alt: 'BAE-CAY motion' },
+      { id: 'bae-6', alt: 'BAE-CAY portrait' },
+    ],
+  },
+  {
+    id: 'business',
+    name: "IT'S BUSINESS BABE",
+    subtitle: "You can do it alone. That's why they're jealous.",
+    style: 'business',
+    photos: [
+      { id: 'biz-1', alt: 'Business Babe look 1' },
+      { id: 'biz-2', alt: 'Business Babe look 2' },
+      { id: 'biz-3', alt: 'Business Babe detail' },
+      { id: 'biz-4', alt: 'Business Babe motion' },
+    ],
+  },
+  {
+    id: 'extravagent',
+    name: 'EXTRA-VAGENT',
+    subtitle: 'Dressed like a dark queen. Built like an empire.',
+    style: 'extravagent',
+    photos: [
+      { id: 'ext-1', alt: 'EXTRA-VAGENT look 1' },
+      { id: 'ext-2', alt: 'EXTRA-VAGENT look 2' },
+      { id: 'ext-3', alt: 'EXTRA-VAGENT feature' },
+      { id: 'ext-4', alt: 'EXTRA-VAGENT detail' },
+      { id: 'ext-5', alt: 'EXTRA-VAGENT portrait' },
+    ],
+  },
 ];
 
-export const looks: Look[] = [
+export const team = [
   {
-    eyebrow: 'THE COLLECTION',
-    title: 'Obsidian',
-    titleItalic: 'Eclipse',
-    desc: 'Black sequin, bronze satin, gold lacework — a collection where every piece holds its own darkness.',
-    rows: [
-      {
-        gridClass: 'g-7-5',
-        pieces: [
-          {
-            aspectClass: 'piece-h2',
-            img: '/images/obsidian-eclipse-gown.jpg',
-            alt: 'The Last Ceremony Gown',
-            accent: 'al-gold',
-            tag: { text: 'SIGNATURE', type: 'tag-sig' },
-            theme: 'OBSIDIAN ECLIPSE',
-            name: 'The Last Ceremony Gown',
-            detail: 'Black sequin bodice · Bronze taffeta skirt · Off-shoulder',
-          },
-          {
-            aspectClass: 'piece-h2',
-            img: '/images/obsidian-eclipse-motion.jpg',
-            alt: 'The Last Ceremony — In Motion',
-            accent: 'al-silver',
-            theme: 'OBSIDIAN ECLIPSE',
-            name: 'The Last Ceremony — In Motion',
-            detail: 'Side profile · Taffeta in movement',
-          },
-        ],
-      },
-      {
-        gridClass: 'g-5-7',
-        pieces: [
-          {
-            aspectClass: 'piece-h3',
-            img: '/images/craftsmanship-detail.jpg',
-            alt: 'The Hand Behind It',
-            accent: 'al-cream',
-            tag: { text: 'DETAIL', type: 'tag-bts' },
-            theme: 'CRAFTSMANSHIP',
-            name: 'The Hand Behind It',
-            detail: 'Corset lacing · Sequin bodice detail',
-          },
-          {
-            aspectClass: 'piece-h3',
-            img: '/images/two-shadows.jpg',
-            alt: 'Two Shadows',
-            accent: 'al-gold',
-            theme: 'OBSIDIAN ECLIPSE · CINDER & ASH',
-            name: 'Two Shadows',
-            detail: 'The Ceremony Gown meets the Gold Corset',
-          },
-        ],
-      },
-    ],
+    initial: 'Z',
+    name: 'ZHAREAL POPA',
+    label: 'THE DESIGNER',
+    role: 'Creative Director & Founder',
+    bio: 'Zhareal brings every ZHADORE piece to life by hand. Her designs move between worlds — baroque maximalism, sharp power dressing, and sun-drenched resort wear. Each stitch is intentional. Each collection tells a story only she could write.',
+    accent: '#C4913A',
   },
   {
-    eyebrow: 'LOOK II',
-    title: 'Cinder',
-    titleItalic: '& Ash',
-    desc: 'Gold canvas corset with black fringe trim, paired wide-leg silhouette — structured yet fluid.',
-    rows: [
-      {
-        gridClass: 'g-5-7',
-        pieces: [
-          {
-            aspectClass: 'piece-h2',
-            img: '/images/cinder-ash-detail.jpg',
-            alt: 'Laced in Gold',
-            accent: 'al-gold',
-            tag: { text: 'DETAIL', type: 'tag-bts' },
-            theme: 'CINDER & ASH',
-            name: 'Laced in Gold',
-            detail: 'Corset back · Black lacing · Fringe trim',
-          },
-          {
-            aspectClass: 'piece-h2',
-            img: '/images/cinder-ash-look.jpg',
-            alt: 'The Power Hour Look',
-            accent: 'al-silver',
-            theme: 'CINDER & ASH',
-            name: 'The Power Hour Look',
-            detail: 'Gold corset · Black blazer · Wide-leg sequin pants',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    eyebrow: 'LOOK III',
-    title: 'Dead of',
-    titleItalic: 'Night',
-    desc: 'Deep espresso croc-texture halter and floor-length skirt — movement-forward and commanding.',
-    rows: [
-      {
-        gridClass: 'g-3',
-        pieces: [
-          {
-            aspectClass: 'piece-h1',
-            img: '/images/dead-of-night-1.jpg',
-            alt: '3am Halter Set',
-            accent: 'al-cream',
-            tag: { text: 'NEW', type: 'tag-new' },
-            theme: 'DEAD OF NIGHT',
-            name: '3am Halter Set',
-            detail: 'Croc-texture satin · Halter top · Trumpet skirt',
-          },
-          {
-            aspectClass: 'piece-h1',
-            img: '/images/dead-of-night-seated.jpg',
-            alt: '3am — Seated',
-            accent: 'al-silver',
-            theme: 'DEAD OF NIGHT',
-            name: '3am — Seated',
-            detail: 'Gold button detail · Mermaid hem',
-          },
-          {
-            aspectClass: 'piece-h1',
-            img: '/images/dead-of-night-bts.jpg',
-            alt: 'The Making Of',
-            accent: 'al-gold',
-            tag: { text: 'BEHIND THE SCENES', type: 'tag-bts' },
-            theme: 'PROCESS',
-            name: 'The Making Of',
-            detail: 'Designer at work · Final fitting',
-          },
-        ],
-      },
-    ],
+    initial: 'Z',
+    name: 'ZAKIA',
+    label: 'THE BUSINESS MIND',
+    role: 'Co-Founder · Tech & Strategy',
+    bio: 'Zakia builds the infrastructure behind the brand — the strategy, the digital presence, and the business vision that takes ZHADORE from a collection into a movement. Where Zhareal creates the world, Zakia makes sure the world sees it.',
+    accent: 'rgba(210,210,220,0.8)',
   },
 ];

@@ -1,0 +1,36 @@
+---
+import type { Theme } from '../data/collection';
+interface Props { theme: Theme; }
+const { theme } = Astro.props;
+
+const commentMap: Record<string, string> = {
+  'bae-cay':     'BAE-CAY PHOTOS GO HERE',
+  'business':    'BUSINESS BABE PHOTOS GO HERE',
+  'extravagent': 'EXTRA-VAGENT PHOTOS GO HERE',
+};
+---
+<div class={`theme-section theme-${theme.style}`} id={theme.id}>
+
+  <!-- intro panel -->
+  <div class="theme-intro reveal">
+    <div class="theme-eyebrow">ZHADORE · SS 2026</div>
+    <h2 class="theme-title">{theme.name}</h2>
+    <p class="theme-subtitle">{theme.subtitle}</p>
+  </div>
+
+  <!-- photo grid -->
+  <!-- {commentMap[theme.style]} -->
+  <div class={`photo-grid grid-${theme.style}`} id={`${theme.id}-grid`}>
+    {theme.photos.map((photo, i) => (
+      <div class="photo-slot reveal">
+        <div class="photo-placeholder">
+          {photo.src
+            ? <img src={photo.src} alt={photo.alt} loading="lazy" />
+            : null
+          }
+        </div>
+      </div>
+    ))}
+  </div>
+
+</div>

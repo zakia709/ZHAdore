@@ -2,7 +2,7 @@
 interface Props {
   title?: string;
 }
-const { title = 'ZHADORE — Collection 2026' } = Astro.props;
+const { title = 'ZHADORE — SS 2026' } = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -12,47 +12,38 @@ const { title = 'ZHADORE — Collection 2026' } = Astro.props;
   <title>{title}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Jost:wght@200;300;400;500;900&display=swap" rel="stylesheet" />
 </head>
 <body>
   <slot />
   <script>
-    // Custom cursor
-    const c = document.getElementById('c')!;
+    // ── Cursor
+    const c  = document.getElementById('c')!;
     const cr = document.getElementById('cr')!;
     let mx = 0, my = 0, rx = 0, ry = 0;
     document.addEventListener('mousemove', e => {
       mx = e.clientX; my = e.clientY;
-      c.style.transform = `translate(${mx - 3}px,${my - 3}px)`;
+      c.style.transform = `translate(${mx - 4}px,${my - 4}px)`;
     });
     (function animRing() {
-      rx += (mx - rx - 14) * 0.12;
-      ry += (my - ry - 14) * 0.12;
+      rx += (mx - rx - 16) * 0.12;
+      ry += (my - ry - 16) * 0.12;
       cr.style.transform = `translate(${rx}px,${ry}px)`;
       requestAnimationFrame(animRing);
     })();
 
-    // Nav scroll + hero-zone colour swap + scroll reveals
+    // ── Nav scroll
     const nav = document.getElementById('nav')!;
-    const hero = document.querySelector<HTMLElement>('.hero');
-    const heroH = hero ? hero.offsetHeight : 0;
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', scrollY > 60);
+    }, { passive: true });
 
-    function onScroll() {
-      const y = scrollY;
-      nav.classList.toggle('scrolled', y > 60);
-      nav.classList.toggle('hero-zone', y < heroH - 80);
-      document.querySelectorAll<HTMLElement>('.reveal').forEach(el => {
-        if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add('in');
-      });
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    setTimeout(() => {
-      document.querySelectorAll<HTMLElement>('.reveal').forEach(el => {
-        if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add('in');
-      });
-    }, 100);
+    // ── IntersectionObserver scroll reveals
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) { (e.target as HTMLElement).classList.add('in'); } }),
+      { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
 </body>
 </html>
