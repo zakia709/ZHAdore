@@ -1,6 +1,7 @@
 ---
 ---
 <section class="hero" id="hero">
+  <canvas id="silk-canvas"></canvas>
   <canvas id="particle-canvas"></canvas>
 
   <!-- animated gold line -->
@@ -104,4 +105,98 @@
   heroEl.addEventListener('mouseleave', () => {
     heroText.style.transform = 'rotateY(0deg) rotateX(0deg)';
   });
+</script>
+
+<script>
+  // ── Silk wave canvas
+  const silk = document.getElementById('silk-canvas') as HTMLCanvasElement;
+  const sx   = silk.getContext('2d')!;
+
+  function resizeSilk() {
+    silk.width  = window.innerWidth;
+    silk.height = window.innerHeight;
+  }
+  resizeSilk();
+  window.addEventListener('resize', resizeSilk, { passive: true });
+
+  let phase      = 0;
+  let targetAmp  = 80;
+  let currentAmp = 80;
+
+  // Mouse: cursor Y controls wave amplitude
+  const silkHero = document.getElementById('hero')!;
+  silkHero.addEventListener('mousemove', (e: MouseEvent) => {
+    const r = silkHero.getBoundingClientRect();
+    const ny = (e.clientY - r.top) / r.height; // 0 = top, 1 = bottom
+    targetAmp = 110 - ny * 60;                  // top→110px, bottom→50px
+  });
+  silkHero.addEventListener('mouseleave', () => { targetAmp = 80; });
+
+  function drawWave(yOff: number, phaseOff: number, opacity: number, amp: number) {
+    const W = silk.width;
+    const H = silk.height;
+    const cy   = H / 2 + yOff;
+    const freq = (Math.PI * 2 * 1.5) / W;
+
+    // ── filled body below the crest
+    const grad = sx.createLinearGradient(0, cy - amp, 0, H);
+    grad.addColorStop(0,    `rgba(255,255,255,${+(0.06  * opacity).toFixed(3)})`);
+    grad.addColorStop(0.35, `rgba(255,255,255,${+(0.022 * opacity).toFixed(3)})`);
+    grad.addColorStop(1,    `rgba(0,0,0,0)`);
+
+    sx.beginPath();
+    sx.moveTo(0, H);
+    for (let x = 0; x <= W; x += 3) {
+      sx.lineTo(x, cy + amp * Math.sin(freq * x + phase + phaseOff));
+    }
+    sx.lineTo(W, H);
+    sx.closePath();
+    sx.fillStyle = grad;
+    sx.fill();
+
+    // ── crest path (reused for all three glow passes)
+    sx.beginPath();
+    sx.moveTo(0, cy + amp * Math.sin(phase + phaseOff));
+    for (let x = 3; x <= W; x += 3) {
+      sx.lineTo(x, cy + amp * Math.sin(freq * x + phase + phaseOff));
+    }
+
+    // Pass 1 — wide outer halo
+    sx.shadowBlur  = 40;
+    sx.shadowColor = `rgba(255,255,255,${+(0.6  * opacity).toFixed(2)})`;
+    sx.strokeStyle = `rgba(255,255,255,${+(0.05 * opacity).toFixed(3)})`;
+    sx.lineWidth   = 4;
+    sx.stroke();
+
+    // Pass 2 — mid glow
+    sx.shadowBlur  = 20;
+    sx.shadowColor = `rgba(255,255,255,${+(0.5  * opacity).toFixed(2)})`;
+    sx.strokeStyle = `rgba(255,255,255,${+(0.15 * opacity).toFixed(3)})`;
+    sx.lineWidth   = 2;
+    sx.stroke();
+
+    // Pass 3 — sharp bright crest line
+    sx.shadowBlur  = 2;
+    sx.shadowColor = `rgba(255,255,255,${+opacity.toFixed(2)})`;
+    sx.strokeStyle = `rgba(255,255,255,${+(0.8  * opacity).toFixed(3)})`;
+    sx.lineWidth   = 1;
+    sx.stroke();
+
+    sx.shadowBlur = 0;
+  }
+
+  (function animateSilk() {
+    sx.clearRect(0, 0, silk.width, silk.height);
+
+    // Lerp amplitude towards target
+    currentAmp += (targetAmp - currentAmp) * 0.05;
+
+    // Draw back-to-front so primary wave is on top
+    drawWave(-20,  0.5,  0.25, currentAmp * 0.9); // faint, above
+    drawWave( 30,  1.2,  0.6,  currentAmp);        // medium, below
+    drawWave(  0,  0,    1.0,  currentAmp);         // primary
+
+    phase += 0.003;
+    requestAnimationFrame(animateSilk);
+  })();
 </script>
