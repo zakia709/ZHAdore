@@ -19,10 +19,10 @@ export const themes: Theme[] = [
     subtitle: 'Sun-kissed. Untamed. Yours.',
     style: 'bae-cay',
     photos: [
-      { id: 'bae-1', alt: 'Dressed in Intention look 1', src: '/images/bae-cay/look-1.jpg' },
-      { id: 'bae-2', alt: 'Dressed in Intention look 2', src: '/images/bae-cay/look-2.jpg' },
-      { id: 'bae-3', alt: 'Dressed in Intention look 3', src: '/images/bae-cay/look-3.jpg' },
-      { id: 'bae-4', alt: 'Dressed in Intention look 4', src: '/images/bae-cay/look-4.jpg' },
+      { id: 'bae-1', alt: 'Dressed in Intention look 1', src: '/images/bae-cay/look-1.png' },
+      { id: 'bae-2', alt: 'Dressed in Intention look 2', src: '/images/bae-cay/look-2.png' },
+      { id: 'bae-3', alt: 'Dressed in Intention look 3', src: '/images/bae-cay/look-3.png' },
+      { id: 'bae-4', alt: 'Dressed in Intention look 4', src: '/images/bae-cay/look-4.png' },
     ],
   },
   {
