@@ -15,16 +15,14 @@ export interface Theme {
 export const themes: Theme[] = [
   {
     id: 'bae-cay',
-    name: 'BAE-CAY',
+    name: 'DRESSED IN INTENTION',
     subtitle: 'Sun-kissed. Untamed. Yours.',
     style: 'bae-cay',
     photos: [
-      { id: 'bae-1', alt: 'BAE-CAY look 1', src: '/images/bae-cay/look-1.jpg' },
-      { id: 'bae-2', alt: 'BAE-CAY look 2', src: '/images/bae-cay/look-2.jpg' },
-      { id: 'bae-3', alt: 'BAE-CAY look 3', src: '/images/bae-cay/look-3.jpg' },
-      { id: 'bae-4', alt: 'BAE-CAY look 4', src: '/images/bae-cay/look-4.jpg' },
-      { id: 'bae-5', alt: 'BAE-CAY look 5', src: '/images/bae-cay/look-5.jpg' },
-      { id: 'bae-6', alt: 'BAE-CAY look 6', src: '/images/bae-cay/look-6.jpg' },
+      { id: 'bae-1', alt: 'Dressed in Intention look 1', src: '/images/bae-cay/look-1.jpg' },
+      { id: 'bae-2', alt: 'Dressed in Intention look 2', src: '/images/bae-cay/look-2.jpg' },
+      { id: 'bae-3', alt: 'Dressed in Intention look 3', src: '/images/bae-cay/look-3.jpg' },
+      { id: 'bae-4', alt: 'Dressed in Intention look 4', src: '/images/bae-cay/look-4.jpg' },
     ],
   },
   {
