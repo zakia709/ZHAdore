@@ -280,11 +280,11 @@ nav#nav.scrolled{
 /* photo grids */
 .photo-grid{position:relative;z-index:2;padding:0 0 3px;}
 
-/* BAE-CAY — 3-col masonry */
+/* BAE-CAY — single row, 4 equal columns */
 .grid-bae-cay{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:3px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:3px;
 }
-.grid-bae-cay .photo-slot{border-radius:12px;overflow:hidden;}
+.grid-bae-cay .photo-slot{border-radius:0;overflow:hidden;}
 
 /* BUSINESS BABE — strict 2-col */
 .grid-business{
@@ -577,7 +577,7 @@ footer{
   .hero-scroll{right:24px;}
   .theme-intro{padding:100px 24px 60px;}
   .theme-title{font-size:clamp(48px,12vw,80px);}
-  .grid-bae-cay{grid-template-columns:1fr 1fr;}
+  .grid-bae-cay{grid-template-columns:1fr 1fr;grid-template-rows:auto auto;}
   .grid-business{grid-template-columns:1fr;}
   .grid-extravagent{grid-template-columns:1fr;}
   .grid-extravagent .photo-slot:nth-child(3){grid-column:auto;}
