@@ -37,12 +37,12 @@ body{
 }
 
 /* ── NAV ─────────────────────────────────────────────── */
-nav{
+nav#nav{
   position:fixed;top:0;width:100%;z-index:300;
   display:flex;align-items:center;justify-content:space-between;
   padding:26px 52px;transition:all .45s ease;
 }
-nav.scrolled{
+nav#nav.scrolled{
   background:rgba(10,10,9,0.96);
   backdrop-filter:blur(18px);
   padding:16px 52px;
@@ -369,7 +369,11 @@ nav.scrolled{
   font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,56px);
   font-weight:300;color:var(--cream);line-height:1.05;
 }
-.about-heading em{font-style:italic;color:var(--muted);}
+.about-heading em{font-style:italic;color:var(--cream);}
+.about-subtitle{
+  margin-top:18px;font-size:13px;letter-spacing:1.2px;
+  color:var(--muted);font-family:'Jost',sans-serif;font-weight:300;
+}
 .about-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:24px;
   max-width:1100px;margin:0 auto;
