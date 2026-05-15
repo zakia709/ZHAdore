@@ -16,7 +16,7 @@ export const themes: Theme[] = [
   {
     id: 'bae-cay',
     name: 'DRESSED IN INTENTION',
-    subtitle: 'Sun-kissed. Untamed. Yours.',
+    subtitle: 'Built for the body as it is. Elevated the way it deserves.',
     style: 'bae-cay',
     photos: [
       { id: 'bae-1', alt: 'Dressed in Intention look 1', src: '/images/bae-cay/look-1.png' },
