@@ -1,0 +1,55 @@
+---
+interface Props {
+  title?: string;
+}
+const { title = 'ZHADORE — Collection 2026' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <slot />
+  <script>
+    // Custom cursor
+    const c = document.getElementById('c')!;
+    const cr = document.getElementById('cr')!;
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      c.style.transform = `translate(${mx - 3.5}px,${my - 3.5}px)`;
+    });
+    (function animRing() {
+      rx += (mx - rx - 16) * 0.14;
+      ry += (my - ry - 16) * 0.14;
+      cr.style.transform = `translate(${rx}px,${ry}px)`;
+      requestAnimationFrame(animRing);
+    })();
+
+    // Nav scroll + scroll reveals
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav')!.classList.toggle('scrolled', scrollY > 60);
+      document.querySelectorAll<HTMLElement>('.reveal').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add('in');
+      });
+    });
+
+    setTimeout(() => {
+      document.querySelectorAll<HTMLElement>('.reveal').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add('in');
+      });
+    }, 100);
+  </script>
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

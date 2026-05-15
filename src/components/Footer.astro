@@ -1,0 +1,15 @@
+---
+const links = [
+  { href: '#collection', label: 'Collection' },
+  { href: '#about', label: 'About' },
+  { href: '#contact', label: 'Contact' },
+];
+const year = new Date().getFullYear();
+---
+<footer>
+  <div class="f-logo">ZHADORE</div>
+  <div class="f-links">
+    {links.map(l => <a href={l.href}>{l.label}</a>)}
+  </div>
+  <div class="f-copy">© {year} ZHADORE · ALL RIGHTS RESERVED</div>
+</footer>

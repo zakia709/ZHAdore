@@ -1,0 +1,31 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  titleItalic: string;
+  subtitle?: string;
+  img: string;
+  imgAlt?: string;
+}
+const {
+  eyebrow = 'A FASHION PORTFOLIO · SPRING 2026',
+  title = 'ZHA',
+  titleItalic = 'DORE',
+  subtitle = 'Dressed in darkness. Named for the hour.',
+  img,
+  imgAlt = 'Zhadore collection',
+} = Astro.props;
+---
+<section class="hero">
+  <img class="hero-img" src={img} alt={imgAlt} />
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">{eyebrow}</div>
+    <h1 class="hero-title">{title}<em>{titleItalic}</em></h1>
+    <p class="hero-sub">{subtitle}</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>SCROLL</span>
+  </div>
+</section>

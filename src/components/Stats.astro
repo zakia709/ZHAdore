@@ -1,0 +1,13 @@
+---
+interface Stat { n: string; l: string; }
+interface Props { stats: Stat[]; }
+const { stats } = Astro.props;
+---
+<div class="stats reveal">
+  {stats.map(s => (
+    <div class="stat">
+      <div class="stat-n">{s.n}</div>
+      <div class="stat-l">{s.l}</div>
+    </div>
+  ))}
+</div>

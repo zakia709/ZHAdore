@@ -1,0 +1,53 @@
+---
+interface Props {
+  initial?: string;
+  name?: string;
+  role?: string;
+  bio?: string;
+  email?: string;
+  instagram?: string;
+  website?: string;
+}
+const {
+  initial = 'Z',
+  name = 'ZHADORE',
+  role = 'DESIGNER · PORTLAND — NEW YORK',
+  bio = `A collection born between hours — where darkness is not an absence of light but a presence of its own. Each piece is named for a specific shade of night: the obsidian edge of a ceremony, the cinder left after a fire, the deep hour before dawn when the city still breathes.<br><br>Handmade. Intentional. Built to be worn like armor.`,
+  email = 'hello@zhadore.com',
+  instagram = '@zhadore',
+  website = 'zhadore.com',
+} = Astro.props;
+---
+<div class="about reveal" id="about">
+  <div class="about-left">
+    <div class="about-avatar">{initial}</div>
+    <div class="about-name">{name}</div>
+    <div class="about-role">{role}</div>
+    <p class="about-bio" set:html={bio}></p>
+  </div>
+  <div class="about-right" id="contact">
+    <div class="contact-section">
+      <div class="contact-lbl">GET IN TOUCH</div>
+      <div class="contact-list">
+        <a href={`mailto:${email}`} class="clink">
+          <div class="clink-ico">
+            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+          </div>
+          {email}
+        </a>
+        <a href={`https://instagram.com/${instagram.replace('@','')}`} class="clink">
+          <div class="clink-ico">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </div>
+          {instagram}
+        </a>
+        <a href={`https://${website}`} class="clink">
+          <div class="clink-ico">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          </div>
+          {website}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

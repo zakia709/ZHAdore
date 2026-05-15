@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Stats from '../components/Stats.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Piece from '../components/Piece.astro';
+import Divider from '../components/Divider.astro';
+import About from '../components/About.astro';
+import Footer from '../components/Footer.astro';
+import { stats, looks } from '../data/collection';
+---
+<Layout>
+  <!-- Cursor -->
+  <div id="c"></div>
+  <div id="cr"></div>
+
+  <Nav />
+
+  <Hero
+    img="/images/hero.jpg"
+    imgAlt="Zhadore collection group shot"
+    title="ZHA"
+    titleItalic="DORE"
+    eyebrow="A FASHION PORTFOLIO · SPRING 2026"
+    subtitle="Dressed in darkness. Named for the hour."
+  />
+
+  <Stats stats={stats} />
+
+  {looks.map((look, i) => (
+    <>
+      {i > 0 && <Divider />}
+
+      <SectionHeader
+        id={i === 0 ? 'collection' : undefined}
+        eyebrow={look.eyebrow}
+        title={look.title}
+        titleItalic={look.titleItalic}
+        desc={look.desc}
+      />
+
+      {look.rows.map(row => (
+        <div class={`grid ${row.gridClass} reveal`}>
+          {row.pieces.map(piece => (
+            <Piece {...piece} />
+          ))}
+        </div>
+      ))}
+    </>
+  ))}
+
+  <About />
+  <Footer />
+</Layout>

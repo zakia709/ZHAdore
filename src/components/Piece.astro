@@ -1,0 +1,23 @@
+---
+interface Props {
+  aspectClass: string;
+  img: string;
+  alt: string;
+  accent: string;
+  tag?: { text: string; type: string };
+  theme: string;
+  name: string;
+  detail: string;
+}
+const { aspectClass, img, alt, accent, tag, theme, name, detail } = Astro.props;
+---
+<div class={`piece ${aspectClass}`}>
+  {tag && <div class={`tag ${tag.type}`}>{tag.text}</div>}
+  <div class={`al ${accent}`}></div>
+  <img src={img} alt={alt} loading="lazy" />
+  <div class="piece-info">
+    <div class="pi-theme">{theme}</div>
+    <div class="pi-name">{name}</div>
+    <div class="pi-detail">{detail}</div>
+  </div>
+</div>

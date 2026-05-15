@@ -1,0 +1,14 @@
+---
+const links = [
+  { href: '#collection', label: 'Collection' },
+  { href: '#about', label: 'About' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+<nav id="nav">
+  <a href="#" class="logo">ZHADORE</a>
+  <ul class="nav-links">
+    {links.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+  </ul>
+  <span class="nav-season">SS 2026</span>
+</nav>
