@@ -217,6 +217,15 @@ nav#nav.scrolled{
 .theme-eyebrow{
   font-size:10px;letter-spacing:5px;color:var(--gold);
   text-transform:uppercase;margin-bottom:20px;font-family:'Jost',sans-serif;font-weight:400;
+  position:relative;overflow:hidden;display:inline-block;
+}
+.theme-eyebrow::after{
+  content:'';
+  position:absolute;top:0;left:-80%;
+  width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);
+  animation:label-glint 6s ease-in-out infinite;
+  pointer-events:none;
 }
 .theme-bae-cay .theme-eyebrow{color:#C4913A;}
 .theme-business .theme-eyebrow{color:rgba(210,210,220,0.8);}
@@ -391,6 +400,11 @@ nav#nav.scrolled{
   width:40px;height:2px;
   background:var(--accent);
   opacity:0.55;
+  animation:accent-breathe 3.5s ease-in-out infinite;
+}
+@keyframes accent-breathe{
+  0%,100%{width:40px;opacity:.55;box-shadow:none;}
+  50%    {width:56px;opacity:.9;box-shadow:0 0 10px var(--accent);}
 }
 .person-card:hover{
   transform:translateY(-6px);
@@ -489,6 +503,42 @@ footer{
   font-size:10px;letter-spacing:4px;color:var(--gold);
   text-transform:uppercase;font-family:'Jost',sans-serif;
   font-weight:400;margin-bottom:10px;
+  position:relative;overflow:hidden;display:inline-block;
+}
+.sec-ey::after{
+  content:'';
+  position:absolute;top:0;left:-80%;
+  width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);
+  animation:label-glint 5s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes label-glint{
+  0%,100%{left:-80%;opacity:0;}
+  15%{opacity:1;}
+  55%{left:140%;opacity:0;}
+  56%,99%{left:-80%;opacity:0;}
+}
+
+/* ── SPARKLE BURST (JS-created elements) ─────────────── */
+.sparkle{
+  position:fixed;
+  width:3px;height:3px;border-radius:50%;
+  background:#E8C878;
+  pointer-events:none;z-index:9997;
+  animation:sparkle-out .75s ease-out forwards;
+}
+.sparkle-sm{width:2px;height:2px;background:#f5f0e8;}
+@keyframes sparkle-out{
+  0%  {opacity:.9;transform:translate(0,0) scale(1);}
+  100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.1);}
+}
+
+/* ── AMBIENT MOTES CANVAS ────────────────────────────── */
+#ambient-canvas{
+  position:fixed;inset:0;pointer-events:none;
+  z-index:2;mix-blend-mode:screen;
+  width:100%;height:100%;
 }
 
 /* ── SCROLL REVEAL ───────────────────────────────────── */

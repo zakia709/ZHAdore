@@ -15,6 +15,7 @@ const { title = 'ZHADORE — SS 2026' } = Astro.props;
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Jost:wght@200;300;400;500;900&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
   <slot />
   <script>
     // ── Cursor
@@ -44,6 +45,61 @@ const { title = 'ZHADORE — SS 2026' } = Astro.props;
       { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
     );
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ── Ambient sparkle motes (site-wide)
+    const ac = document.getElementById('ambient-canvas') as HTMLCanvasElement;
+    const ax = ac.getContext('2d')!;
+    function resizeAmbient() { ac.width = window.innerWidth; ac.height = window.innerHeight; }
+    resizeAmbient();
+    window.addEventListener('resize', resizeAmbient, { passive: true });
+
+    type Mote = { x: number; y: number; vx: number; vy: number; r: number; a: number; };
+    function newMote(fromBottom?: boolean): Mote {
+      return {
+        x:  Math.random() * window.innerWidth,
+        y:  fromBottom ? window.innerHeight + 4 : Math.random() * window.innerHeight,
+        vx: (Math.random() - .5) * .15,
+        vy: -(Math.random() * .22 + .06),
+        r:  Math.random() * .7 + .2,
+        a:  Math.random() * .14 + .04,
+      };
+    }
+    const motes: Mote[] = Array.from({ length: 28 }, () => newMote());
+
+    (function drawMotes() {
+      ax.clearRect(0, 0, ac.width, ac.height);
+      for (let i = 0; i < motes.length; i++) {
+        const m = motes[i];
+        m.x += m.vx; m.y += m.vy;
+        if (m.x < 0) m.x = ac.width;
+        if (m.x > ac.width) m.x = 0;
+        if (m.y < -2) { motes[i] = newMote(true); continue; }
+        ax.beginPath();
+        ax.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+        ax.fillStyle = `rgba(232,200,120,${m.a})`;
+        ax.fill();
+      }
+      requestAnimationFrame(drawMotes);
+    })();
+
+    // ── Sparkle burst on person-card hover
+    document.querySelectorAll('.person-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        const rect = (el as HTMLElement).getBoundingClientRect();
+        for (let i = 0; i < 11; i++) {
+          const s = document.createElement('div');
+          const isSmall = i % 3 === 0;
+          s.className = isSmall ? 'sparkle sparkle-sm' : 'sparkle';
+          const x = rect.left + Math.random() * rect.width;
+          const y = rect.top  + Math.random() * rect.height;
+          const angle = Math.random() * Math.PI * 2;
+          const dist  = 18 + Math.random() * 42;
+          s.style.cssText = `left:${x.toFixed(1)}px;top:${y.toFixed(1)}px;--dx:${(Math.cos(angle)*dist).toFixed(1)}px;--dy:${(Math.sin(angle)*dist).toFixed(1)}px;animation-delay:${(i*40)}ms`;
+          document.body.appendChild(s);
+          setTimeout(() => s.remove(), 850 + i * 40);
+        }
+      });
+    });
   </script>
 </body>
 </html>
