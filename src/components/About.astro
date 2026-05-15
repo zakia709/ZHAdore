@@ -2,6 +2,7 @@
 import type { team } from '../data/collection';
 interface Props { members: typeof team; }
 const { members } = Astro.props;
+type Member = (typeof team)[number];
 ---
 <section class="about-section reveal" id="about">
   <div class="about-header">
@@ -12,7 +13,7 @@ const { members } = Astro.props;
 
   <div class="about-grid">
     {members.map(m => (
-      <div class="person-card" style={`--accent:${m.accent}`}>
+      <div class="person-card" style={`--accent:${(m as Member).accent};--avatar-bg:${(m as Member).avatarBg}`}>
         <div class="person-avatar">{m.initial}</div>
         <div class="person-label">{m.label}</div>
         <div class="person-name">{m.name}</div>

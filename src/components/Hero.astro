@@ -32,6 +32,7 @@
       <div class="hero-title-wrap">
         <span class="hero-zh">ZH</span><span class="hero-adore">ADORE</span>
       </div>
+      <div class="hero-rule"></div>
       <p class="hero-subtitle">A FASHION PORTFOLIO &nbsp;·&nbsp; SS 2026</p>
     </div>
   </div>
@@ -56,21 +57,31 @@
   window.addEventListener('resize', resizeCanvas, { passive: true });
 
   type Particle = { x: number; y: number; vx: number; vy: number; r: number; a: number; };
-  const particles: Particle[] = Array.from({ length: 60 }, () => ({
-    x:  Math.random() * window.innerWidth,
-    y:  Math.random() * window.innerHeight,
-    vx: (Math.random() - .5) * .28,
-    vy: (Math.random() - .5) * .28,
-    r:  Math.random() * 1.8 + .3,
-    a:  Math.random() * .45 + .08,
-  }));
+
+  function spawnParticle(): Particle {
+    return {
+      x:  Math.random() * window.innerWidth,
+      y:  Math.random() * window.innerHeight,
+      vx: (Math.random() - .5) * .2,
+      vy: -(Math.random() * .35 + .08),
+      r:  Math.random() * 1.8 + .3,
+      a:  Math.random() * .45 + .08,
+    };
+  }
+
+  const particles: Particle[] = Array.from({ length: 60 }, spawnParticle);
 
   function drawParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (const p of particles) {
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
       p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > canvas.width)  p.vx *= -1;
-      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) {
+        particles[i] = { ...spawnParticle(), y: canvas.height };
+        continue;
+      }
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(196,145,58,${p.a})`;
@@ -88,7 +99,7 @@
     const r   = heroEl.getBoundingClientRect();
     const dx  = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
     const dy  = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
-    heroText.style.transform = `rotateY(${dx * 8}deg) rotateX(${-dy * 8}deg)`;
+    heroText.style.transform = `rotateY(${dx * 6}deg) rotateX(${-dy * 6}deg)`;
   });
   heroEl.addEventListener('mouseleave', () => {
     heroText.style.transform = 'rotateY(0deg) rotateX(0deg)';
