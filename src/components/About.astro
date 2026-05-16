@@ -52,20 +52,24 @@ type Member = (typeof team)[number];
 
 <script>
   let audioCtx: AudioContext | null = null;
-  function getCtx() {
+
+  async function getCtx() {
     if (!audioCtx) audioCtx = new AudioContext();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
+    if (audioCtx.state === 'suspended') await audioCtx.resume();
     return audioCtx;
   }
 
-  // Pre-unlock AudioContext on first click anywhere on the page
+  // Re-unlock whenever the page becomes visible again after switching tabs
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+  });
   document.addEventListener('click', () => {
-    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-    if (!audioCtx) { audioCtx = new AudioContext(); audioCtx.resume(); }
-  }, { once: true });
+    if (!audioCtx) { audioCtx = new AudioContext(); }
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+  });
 
-  function playChime() {
-    const ctx = getCtx();
+  async function playChime() {
+    const ctx = await getCtx();
     const now = ctx.currentTime;
     // Soft ascending arpeggio in A major — melodic and peaceful
     // [frequency, startDelay, peakGain, duration]
@@ -89,8 +93,8 @@ type Member = (typeof team)[number];
     });
   }
 
-  function playSwoosh() {
-    const ctx = getCtx();
+  async function playSwoosh() {
+    const ctx = await getCtx();
     const now = ctx.currentTime;
 
     // Peaceful piano-like arpeggio in F major — slow, warm, reflective
