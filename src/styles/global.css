@@ -443,6 +443,29 @@ nav#nav.scrolled{
   font-size:13px;color:var(--muted);line-height:2;
   font-weight:300;max-width:380px;
 }
+.person-socials{
+  display:flex;gap:12px;margin-top:24px;
+}
+.person-social{
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.02);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);text-decoration:none;
+  transition:color .25s ease,border-color .25s ease,background .25s ease,transform .25s ease,box-shadow .25s ease;
+}
+.person-social svg{
+  width:14px;height:14px;
+  stroke:currentColor;stroke-width:1.5;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+.person-social:hover{
+  color:var(--accent);
+  border-color:var(--accent);
+  background:rgba(255,255,255,.04);
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px -6px var(--accent);
+}
 
 /* contact strip in about */
 .about-contact{

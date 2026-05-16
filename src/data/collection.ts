@@ -61,6 +61,8 @@ export const team = [
     bio: "Zhareal Popa has a degree in Apparel Design from Oregon State University — but her real education started when she stopped making clothes for people and started making them for herself. What began as alterations turned into full collections: each one darker, more intentional, more her. She designs for women who don't fit a mold and don't want to. Every piece she makes is handbuilt, hand-finished, and made to be felt.",
     accent: '#C4913A',
     avatarBg: 'rgba(196,145,58,0.1)',
+    email: 'Zhadoree@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/zhareal-popa-/',
   },
   {
     initial: 'Z',
@@ -70,5 +72,7 @@ export const team = [
     bio: "Zakia Yesmin is the person who makes sure ZHADORE has a digital heartbeat. She studies Business Information Systems in New York and lives at the intersection of tech and fashion — the place most people don't think to look. She built this website. She builds the strategy. She's here because she believes the most powerful thing a creative brand can have is someone who understands both the art and the code behind it.",
     accent: 'rgba(210,210,220,0.8)',
     avatarBg: 'rgba(210,210,220,0.06)',
+    email: 'Zhadoree@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/zakia-yesmin-061321308/',
   },
 ];
