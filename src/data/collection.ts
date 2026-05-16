@@ -48,6 +48,7 @@ export const themes: Theme[] = [
       { id: 'ext-3', alt: 'EXTRA-VAGENT look 3', src: '/images/extravagent/look-3.jpg' },
       { id: 'ext-4', alt: 'EXTRA-VAGENT look 4', src: '/images/extravagent/look-4.jpg' },
       { id: 'ext-5', alt: 'EXTRA-VAGENT look 5', src: '/images/extravagent/look-5.jpg' },
+      { id: 'ext-6', alt: 'EXTRA-VAGENT look 6', src: '/images/extravagent/look-6.jpg' },
     ],
   },
 ];
