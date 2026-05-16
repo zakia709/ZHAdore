@@ -195,11 +195,12 @@ nav#nav.scrolled{
     repeating-linear-gradient(0deg,rgba(196,145,58,.04) 0px,rgba(196,145,58,.04) 1px,transparent 1px,transparent 9px),
     repeating-linear-gradient(90deg,rgba(196,145,58,.04) 0px,rgba(196,145,58,.04) 1px,transparent 1px,transparent 9px);
 }
-.theme-business{background:#000;}
+.theme-business{background:#05030a;}
 .theme-business::before{
-  background-image:repeating-linear-gradient(
-    45deg,rgba(255,255,255,.03) 0px,rgba(255,255,255,.03) 1px,transparent 1px,transparent 9px
-  );
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 50%,rgba(196,145,58,.04) 0%,transparent 70%),
+    repeating-linear-gradient(0deg,transparent,transparent 48px,rgba(196,145,58,.025) 48px,rgba(196,145,58,.025) 49px),
+    repeating-linear-gradient(90deg,transparent,transparent 48px,rgba(196,145,58,.025) 48px,rgba(196,145,58,.025) 49px);
 }
 .theme-extravagent{background:#0a0005;}
 .theme-extravagent::before{
@@ -233,7 +234,7 @@ nav#nav.scrolled{
   filter:blur(.4px);
 }
 .theme-bae-cay .theme-eyebrow{color:#C4913A;}
-.theme-business .theme-eyebrow{color:rgba(210,210,220,0.8);}
+.theme-business .theme-eyebrow{color:#C4913A;}
 .theme-extravagent .theme-eyebrow{color:#C4913A;}
 
 .theme-title{
@@ -249,11 +250,14 @@ nav#nav.scrolled{
   text-shadow:0 0 40px rgba(196,145,58,.3);
 }
 .theme-business .theme-title{
-  font-family:'Jost',sans-serif;
-  font-weight:900;
-  color:#fff;
-  letter-spacing:-1px;
+  font-family:'Playfair Display',serif;
+  font-weight:400;
+  letter-spacing:2px;
   text-transform:uppercase;
+  background:linear-gradient(130deg,#C4913A 0%,#E8C878 50%,#C4913A 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;background-size:200% 100%;
+  animation:extravagent-shimmer 3s ease-in-out infinite;
 }
 .theme-extravagent .theme-title{
   font-family:'Playfair Display',serif;
@@ -273,8 +277,9 @@ nav#nav.scrolled{
   font-weight:300;
 }
 .theme-business .theme-subtitle{
-  font-family:'Jost',sans-serif;font-style:normal;
-  color:rgba(255,255,255,.35);
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  color:var(--muted);
 }
 
 /* photo grids */
