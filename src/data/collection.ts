@@ -33,6 +33,8 @@ export const themes: Theme[] = [
     photos: [
       { id: 'biz-1', alt: 'Business Babe look 1', src: '/images/business/look-3.png' },
       { id: 'biz-2', alt: 'Business Babe look 2', src: '/images/business/look-1.jpg' },
+      { id: 'biz-3', alt: 'Business Babe look 3', src: '/images/business/look-4.jpg' },
+      { id: 'biz-4', alt: 'Business Babe look 4', src: '/images/business/look-5.png' },
     ],
   },
   {
