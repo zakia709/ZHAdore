@@ -59,7 +59,7 @@ export const team = [
     name: 'ZHAREAL POPA',
     label: 'THE DESIGNER',
     role: 'Creative Director & Founder',
-    bio: "I have a degree in Apparel Design from Oregon State University — but my real education started when I stopped making clothes for people and started making them for myself. What began as alterations turned into full collections: each one darker, more intentional, more me. I design for women who don't fit a mold and don't want to. Every piece I make is handbuilt, hand-finished, and made to be felt.",
+    bio: "I have a degree in Apparel Design from Oregon State University — but my real education started the moment I realized every woman deserves something made for her alone. What began as creating one-of-one pieces for others became full collections: each one darker, and yet — the deeper the shadow, the more deliberately the light finds its way in. I design for women who don't fit a mold and don't want to. My goal is to create artwork for the one-of-one woman — she who values authenticity, who knows what hard work costs, and who deserves to be preserved in the form of fashion. Every piece is handbuilt, hand-finished, and made to be felt.",
     accent: '#C4913A',
     avatarBg: 'rgba(196,145,58,0.1)',
     email: 'Zhadoree@gmail.com',
