@@ -18,20 +18,22 @@ const { title = 'ZHADORE — SS 2026' } = Astro.props;
   <canvas id="ambient-canvas" aria-hidden="true"></canvas>
   <slot />
   <script>
-    // ── Cursor
-    const c  = document.getElementById('c')!;
-    const cr = document.getElementById('cr')!;
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      c.style.transform = `translate(${mx - 4}px,${my - 4}px)`;
-    });
-    (function animRing() {
-      rx += (mx - rx - 16) * 0.12;
-      ry += (my - ry - 16) * 0.12;
-      cr.style.transform = `translate(${rx}px,${ry}px)`;
-      requestAnimationFrame(animRing);
-    })();
+    // ── Cursor Z
+    const curZ = document.getElementById('cursor-z');
+    if (curZ) {
+      let mx = 0, my = 0, cx = 0, cy = 0;
+      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+      (function animZ() {
+        cx += (mx - cx) * 0.14;
+        cy += (my - cy) * 0.14;
+        curZ.style.transform = `translate(calc(${cx}px - 50%), calc(${cy}px - 50%))`;
+        requestAnimationFrame(animZ);
+      })();
+      document.querySelectorAll('a,button,.photo-slot,.person-card').forEach(el => {
+        el.addEventListener('mouseenter', () => curZ.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => curZ.classList.remove('hovering'));
+      });
+    }
 
     // ── Nav scroll
     const nav = document.getElementById('nav')!;

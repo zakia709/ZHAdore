@@ -25,15 +25,26 @@ body{
 }
 
 /* ── CURSOR ──────────────────────────────────────────── */
-#c{
-  width:8px;height:8px;background:#fff;border-radius:50%;
+#cursor-z{
   position:fixed;top:0;left:0;pointer-events:none;z-index:9999;
-  mix-blend-mode:difference;transition:transform .08s;
+  font-family:'Playfair Display',serif;font-size:30px;font-weight:700;font-style:italic;
+  line-height:1;
+  background:linear-gradient(135deg,#7A4E10 0%,#C4913A 20%,#F0D98A 45%,#E8C878 55%,#C4913A 80%,#7A4E10 100%);
+  background-size:300% 300%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:cursor-gold-shimmer 2s ease-in-out infinite;
+  filter:drop-shadow(0 0 6px rgba(196,145,58,.9)) drop-shadow(0 0 18px rgba(232,200,120,.5));
+  transform:translate(-50%,-50%);
+  transition:transform .06s ease,filter .2s ease;
+  will-change:transform;
 }
-#cr{
-  width:32px;height:32px;
-  border:1px solid rgba(196,145,58,0.5);border-radius:50%;
-  position:fixed;top:0;left:0;pointer-events:none;z-index:9998;
+#cursor-z.hovering{
+  filter:drop-shadow(0 0 10px rgba(232,200,120,1)) drop-shadow(0 0 28px rgba(196,145,58,.8));
+}
+@keyframes cursor-gold-shimmer{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
 }
 
 /* ── NAV ─────────────────────────────────────────────── */
