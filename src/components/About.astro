@@ -12,8 +12,8 @@ type Member = (typeof team)[number];
   </div>
 
   <div class="about-grid">
-    {members.map(m => (
-      <div class="person-card" style={`--accent:${(m as Member).accent};--avatar-bg:${(m as Member).avatarBg}`}>
+    {members.map((m, i) => (
+      <div class="person-card" data-sound={i === 0 ? 'chime' : 'swoosh'} style={`--accent:${(m as Member).accent};--avatar-bg:${(m as Member).avatarBg}`}>
         <div class="person-avatar">{m.initial}</div>
         <div class="person-label">{m.label}</div>
         <div class="person-name">{m.name}</div>
@@ -49,3 +49,60 @@ type Member = (typeof team)[number];
     </div>
   </div>
 </section>
+
+<script>
+  let audioCtx: AudioContext | null = null;
+  function getCtx() {
+    if (!audioCtx) audioCtx = new AudioContext();
+    return audioCtx;
+  }
+
+  function playChime() {
+    const ctx = getCtx();
+    const now = ctx.currentTime;
+    // Layered sine waves for a rich bell-like ping
+    [[1047, 0.28], [2093, 0.12], [3136, 0.06]].forEach(([freq, vol]) => {
+      const osc  = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      gain.gain.setValueAtTime(vol as number, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.6);
+      osc.start(now); osc.stop(now + 1.6);
+    });
+  }
+
+  function playSwoosh() {
+    const ctx = getCtx();
+    const now = ctx.currentTime;
+    const dur = 0.22;
+    const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * dur), ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+    const src    = ctx.createBufferSource();
+    src.buffer   = buf;
+    const bpf    = ctx.createBiquadFilter();
+    bpf.type     = 'bandpass';
+    bpf.frequency.setValueAtTime(600, now);
+    bpf.frequency.exponentialRampToValueAtTime(2400, now + dur);
+    bpf.Q.value  = 0.8;
+    const gain   = ctx.createGain();
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(0.18, now + 0.04);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+    src.connect(bpf); bpf.connect(gain); gain.connect(ctx.destination);
+    src.start(now);
+  }
+
+  document.querySelectorAll<HTMLElement>('.person-card[data-sound]').forEach(card => {
+    let cooldown = false;
+    card.addEventListener('mouseenter', () => {
+      if (cooldown) return;
+      cooldown = true;
+      setTimeout(() => cooldown = false, 600);
+      if (card.dataset.sound === 'chime') playChime();
+      else playSwoosh();
+    });
+  });
+</script>
