@@ -70,7 +70,7 @@ export const team = [
     name: 'ZAKIA YESMIN',
     label: 'TECH & FASHION · BUILDER',
     role: 'Tech & Fashion · Builder',
-    bio: "I'm the person who makes sure ZHADORE has a digital heartbeat. I study Business Information Systems in New York and live at the intersection of tech and fashion — the place most people don't think to look. I built this website. I build the strategy. I'm here because I believe the most powerful thing a creative brand can have is someone who understands both the art and the code behind it.",
+    bio: "I study Business Information Systems in New York and I live at the intersection of tech and fashion. I had a vision for what ZHADORE could look like digitally and I made it happen. I built this website from the ground up, learning in real time, mixing software development and UI with a genuine passion for the fashion industry. I build the strategy, the digital presence, the infrastructure that turns a collection into a brand. I'm here because I believe the most powerful thing a creative brand can have is someone who understands both the art and the code behind it.",
     accent: 'rgba(210,210,220,0.8)',
     avatarBg: 'rgba(210,210,220,0.06)',
     email: 'Zhadoree@gmail.com',
