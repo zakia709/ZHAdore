@@ -86,49 +86,45 @@ type Member = (typeof team)[number];
     const ctx = getCtx();
     const now = ctx.currentTime;
 
-    // Devil Wears Prada-inspired fashion sting:
-    // confident ascending phrase (E minor → landing on B) with warmth & subtle echo
+    // Peaceful piano-like arpeggio in F major — slow, warm, reflective
+    // Like the quiet Paris walking scenes in Devil Wears Prada
     const notes: [number, number, number, number][] = [
-      [330, 0.00, 0.07, 0.22],   // E4  — opening
-      [415, 0.12, 0.08, 0.22],   // G#4 — tension
-      [523, 0.23, 0.09, 0.30],   // C5  — rise
-      [659, 0.35, 0.11, 0.75],   // E5  — confident landing, held
+      [349, 0.00, 0.055, 2.8],   // F4  — gentle opening
+      [440, 0.28, 0.045, 2.6],   // A4  — warm middle
+      [523, 0.56, 0.040, 2.4],   // C5  — floating up
+      [698, 0.84, 0.035, 3.0],   // F5  — soft resolve, long fade
     ];
 
-    // Subtle echo for depth
-    const echo     = ctx.createDelay(1.0);
-    echo.delayTime.value = 0.2;
-    const echoGain = ctx.createGain();
-    echoGain.gain.value  = 0.12;
-    echo.connect(echoGain);
-    echoGain.connect(ctx.destination);
+    // Gentle reverb: two layered delays for spaciousness
+    const rev1 = ctx.createDelay(1.0); rev1.delayTime.value = 0.28;
+    const rev2 = ctx.createDelay(1.0); rev2.delayTime.value = 0.46;
+    const rg1  = ctx.createGain();     rg1.gain.value  = 0.10;
+    const rg2  = ctx.createGain();     rg2.gain.value  = 0.06;
+    rev1.connect(rg1); rg1.connect(ctx.destination);
+    rev2.connect(rg2); rg2.connect(ctx.destination);
 
     notes.forEach(([freq, offset, vol, dur]) => {
-      const osc    = ctx.createOscillator();
-      const harm   = ctx.createOscillator();
-      const filt   = ctx.createBiquadFilter();
-      const gain   = ctx.createGain();
+      const osc  = ctx.createOscillator();
+      const sub  = ctx.createOscillator();
+      const gain = ctx.createGain();
 
-      osc.type  = 'triangle';   // warm, string-like body
-      harm.type = 'sine';        // smooth upper harmonic
-      osc.frequency.setValueAtTime(freq, now + offset);
-      harm.frequency.setValueAtTime(freq * 2, now + offset);
+      osc.type  = 'sine';             // pure piano-like tone
+      sub.type  = 'sine';             // soft sub-octave for warmth
+      osc.frequency.setValueAtTime(freq,       now + offset);
+      sub.frequency.setValueAtTime(freq / 2,   now + offset);
 
-      filt.type = 'lowpass';
-      filt.frequency.value = 3200;
-      filt.Q.value = 0.4;
-
-      osc.connect(filt); harm.connect(filt);
-      filt.connect(gain);
+      osc.connect(gain); sub.connect(gain);
       gain.connect(ctx.destination);
-      gain.connect(echo);
+      gain.connect(rev1);
+      gain.connect(rev2);
 
-      gain.gain.setValueAtTime(0, now + offset);
-      gain.gain.linearRampToValueAtTime(vol, now + offset + 0.025);
+      gain.gain.setValueAtTime(0,   now + offset);
+      gain.gain.linearRampToValueAtTime(vol, now + offset + 0.06);   // soft attack
+      gain.gain.setValueAtTime(vol, now + offset + 0.12);            // brief sustain
       gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + dur);
 
-      osc.start(now + offset);  osc.stop(now + offset + dur + 0.1);
-      harm.start(now + offset); harm.stop(now + offset + dur + 0.1);
+      osc.start(now + offset); osc.stop(now + offset + dur + 0.1);
+      sub.start(now + offset); sub.stop(now + offset + dur + 0.1);
     });
   }
 
