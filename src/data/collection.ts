@@ -24,7 +24,10 @@ export const themes: Theme[] = [
       { id: 'bae-3', alt: 'Dressed in Intention look 3', src: '/images/bae-cay/look-4.png' },
       { id: 'bae-4', alt: 'Dressed in Intention look 4', src: '/images/bae-cay/look-5.jpg' },
       { id: 'bae-5', alt: 'Dressed in Intention look 5', src: '/images/bae-cay/look-6.jpg' },
-      { id: 'bae-6', alt: 'Dressed in Intention look 6', src: '/images/bae-cay/look-7.jpg' },
+      { id: 'bae-6', alt: 'Dressed in Intention look 6', src: '/images/bae-cay/look-7.png' },
+      { id: 'bae-7', alt: 'Dressed in Intention look 7', src: '/images/bae-cay/look-8.png' },
+      { id: 'bae-8', alt: 'Dressed in Intention look 8', src: '/images/bae-cay/look-9.png' },
+      { id: 'bae-9', alt: 'Dressed in Intention look 9', src: '/images/bae-cay/look-10.jpg' },
     ],
   },
   {
