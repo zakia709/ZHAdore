@@ -31,9 +31,8 @@ export const themes: Theme[] = [
     subtitle: "You can do it alone. That's why they're jealous.",
     style: 'business',
     photos: [
-      { id: 'biz-1', alt: 'Business Babe look 1', src: '/images/business/look-1.jpg' },
-      { id: 'biz-2', alt: 'Business Babe look 2', src: '/images/business/look-2.jpg' },
-      { id: 'biz-3', alt: 'Business Babe look 3', src: '/images/business/look-3.png' },
+      { id: 'biz-1', alt: 'Business Babe look 1', src: '/images/business/look-3.png' },
+      { id: 'biz-2', alt: 'Business Babe look 2', src: '/images/business/look-1.jpg' },
     ],
   },
   {
