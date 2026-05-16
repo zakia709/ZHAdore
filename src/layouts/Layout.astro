@@ -34,6 +34,11 @@ const { title = 'ZHADORE — SS 2026' } = Astro.props;
   <canvas id="ambient-canvas" aria-hidden="true"></canvas>
   <slot />
   <script>
+    // ── Always load at the top of the page
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    window.addEventListener('load', () => window.scrollTo(0, 0));
+
     // ── Cursor Z
     const curZ = document.getElementById('cursor-z');
     if (curZ) {
