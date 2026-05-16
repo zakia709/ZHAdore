@@ -54,8 +54,15 @@ type Member = (typeof team)[number];
   let audioCtx: AudioContext | null = null;
   function getCtx() {
     if (!audioCtx) audioCtx = new AudioContext();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
     return audioCtx;
   }
+
+  // Pre-unlock AudioContext on first click anywhere on the page
+  document.addEventListener('click', () => {
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    if (!audioCtx) { audioCtx = new AudioContext(); audioCtx.resume(); }
+  }, { once: true });
 
   function playChime() {
     const ctx = getCtx();
