@@ -1,0 +1,491 @@
+---
+// src/components/ThemeSection.astro
+// Reusable theme display — intro panel + photo grid
+export interface Props {
+  id: string;
+  name: string;
+  tagline: string;
+  description?: string;
+  looks: Array<{
+    id: string;
+    file: string;
+    alt: string;
+    width: number;
+    height: number;
+  }>;
+}
+const { id, name, tagline, description, looks } = Astro.props;
+const placeholderImage = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+---
+
+<section class="theme-section" id={id} aria-labelledby={`${id}-title`} tabindex="0" role="button" aria-expanded="false" aria-controls={`${id}-gallery`}>
+  <div class="theme-card-inner">
+    <div class="theme-intro reveal">
+      <div class="eyebrow">ZHADORE &middot; SS 2026</div>
+      <h2 id={`${id}-title`} class="theme-title">{name}</h2>
+      <p class="theme-tagline">{tagline}</p>
+      {description && <p class="theme-description">{description}</p>}
+    </div>
+    <p class="theme-open-hint">Click to view this theme’s images</p>
+  </div>
+
+  <div class="theme-overlay" id={`${id}-gallery`} aria-hidden="true">
+    <div class="theme-overlay-panel">
+      <div class="theme-overlay-header">
+        <div>
+          <div class="eyebrow">ZHADORE &middot; SS 2026</div>
+          <h3 class="theme-title">{name}</h3>
+        </div>
+        <button class="theme-close" type="button" aria-label={`Close ${name} gallery`}>×</button>
+      </div>
+
+      <div class="theme-overlay-content">
+        <div class="photo-grid theme-overlay-grid">
+          {looks.map((look) => (
+            <figure class="photo-slot reveal">
+              <button class="photo-placeholder photo-zoom-trigger" type="button" aria-label={`Open ${look.alt}`}>
+                <img
+                  src={placeholderImage}
+                  data-src={`/images/${look.file}`}
+                  alt={look.alt}
+                  loading="lazy"
+                  width={look.width}
+                  height={look.height}
+                />
+              </button>
+              <figcaption class="sr-only">{look.alt}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .theme-section {
+    padding: 0;
+    border-bottom: none;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .theme-card-inner {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    padding: var(--space-xl);
+    height: 100%;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .theme-section:hover .theme-card-inner {
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-gold-sm);
+  }
+
+  .theme-open-hint {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .theme-intro {
+    text-align: left;
+    margin-bottom: var(--space-xl);
+    position: relative;
+    padding-bottom: var(--space-lg);
+  }
+
+  .theme-intro::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-gold), transparent);
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-md);
+  }
+
+  .theme-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+    line-height: var(--leading-snug);
+  }
+
+  .theme-tagline {
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+    letter-spacing: var(--tracking-normal);
+  }
+
+  .theme-description {
+    max-width: 700px;
+    margin: var(--space-md) 0 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+  }
+
+  .theme-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xl);
+    background: rgba(0, 0, 0, 0.86);
+    backdrop-filter: blur(8px);
+  }
+
+  .theme-section.is-open .theme-overlay {
+    display: flex;
+  }
+
+  .theme-overlay-panel {
+    width: min(1120px, 100%);
+    max-height: 90vh;
+    overflow: auto;
+    background: #090909;
+    border: 1px solid var(--color-gold);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-gold-sm);
+  }
+
+  .theme-overlay-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .theme-close {
+    border: none;
+    background: transparent;
+    color: var(--color-text);
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .theme-overlay-content {
+    width: 100%;
+  }
+
+  .theme-overlay-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .photo-slot {
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .photo-placeholder {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background: var(--color-bg-elevated);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+    padding: 0;
+    cursor: zoom-in;
+  }
+
+  .photo-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease, opacity var(--transition-base);
+    filter: grayscale(100%) contrast(1.05);
+  }
+
+  .photo-slot:hover .photo-placeholder {
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-gold-sm);
+  }
+
+  .photo-slot:hover .photo-placeholder img {
+    transform: scale(1.05);
+    filter: grayscale(0%) contrast(1.1) brightness(1.05);
+  }
+
+  /* Reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .photo-placeholder:hover img {
+      transform: none;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .theme-overlay-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 900px) {
+    .theme-overlay-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-lg);
+    }
+  }
+
+  /* Reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .photo-placeholder:hover img {
+      transform: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .photo-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .theme-overlay-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .theme-title {
+    font-size: var(--text-2xl);
+  }
+
+  .zoom-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xl);
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(10px);
+  }
+
+  .zoom-modal.is-open {
+    display: flex;
+  }
+
+  .zoom-modal-content {
+    position: relative;
+    width: min(100%, 1120px);
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(8, 8, 8, 0.95);
+    border: 1px solid rgba(196, 145, 58, 0.6);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+    padding: var(--space-lg);
+    border-radius: 4px;
+  }
+
+  .zoom-modal-content img {
+    max-width: 100%;
+    max-height: 84vh;
+    object-fit: contain;
+    display: block;
+    border-radius: 2px;
+  }
+
+  .zoom-close {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    border: none;
+    background: rgba(0, 0, 0, 0.7);
+    color: var(--color-text);
+    font-size: 1.8rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+</style>
+
+<div class="zoom-modal" aria-hidden="true">
+  <div class="zoom-modal-content">
+    <button class="zoom-close" type="button" aria-label="Close zoomed image">×</button>
+    <img src="" alt="" />
+  </div>
+</div>
+
+<script>
+  const revealElements = document.querySelectorAll('.reveal');
+  const themeSections = document.querySelectorAll('.theme-section');
+  const zoomModal = document.querySelector('.zoom-modal');
+  const zoomImage = zoomModal?.querySelector('img');
+  const zoomClose = zoomModal?.querySelector('.zoom-close');
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    revealElements.forEach((el) => observer.observe(el));
+  } else {
+    revealElements.forEach((el) => el.classList.add('visible'));
+  }
+
+  const openZoom = (imgElement) => {
+    if (!zoomModal || !zoomImage) return;
+    zoomImage.setAttribute('src', imgElement.getAttribute('src'));
+    zoomImage.setAttribute('alt', imgElement.getAttribute('alt') || '');
+    zoomModal.classList.add('is-open');
+    zoomModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeZoom = () => {
+    if (!zoomModal || !zoomImage) return;
+    zoomModal.classList.remove('is-open');
+    zoomModal.setAttribute('aria-hidden', 'true');
+    zoomImage.setAttribute('src', '');
+    zoomImage.setAttribute('alt', '');
+    document.body.style.overflow = '';
+  };
+
+  zoomClose?.addEventListener('click', closeZoom);
+  zoomModal?.addEventListener('click', (event) => {
+    if (event.target === zoomModal) {
+      closeZoom();
+    }
+  });
+
+  document.querySelectorAll('.photo-zoom-trigger').forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const img = trigger.querySelector('img');
+      if (img) openZoom(img);
+    });
+  });
+
+  themeSections.forEach((section) => {
+    const overlay = section.querySelector('.theme-overlay');
+    const closeButton = section.querySelector('.theme-close');
+
+    const openGallery = () => {
+      section.classList.add('is-open');
+      section.setAttribute('aria-expanded', 'true');
+      overlay?.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      section.querySelectorAll('img[data-src]').forEach((img) => {
+        const src = img.getAttribute('data-src');
+        if (src && img.getAttribute('src') !== src) {
+          img.setAttribute('src', src);
+        }
+      });
+    };
+
+    const closeGallery = () => {
+      section.classList.remove('is-open');
+      section.setAttribute('aria-expanded', 'false');
+      overlay?.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    section.addEventListener('click', (event) => {
+      if (event.target instanceof HTMLElement && event.target.closest('.theme-close')) {
+        event.stopPropagation();
+        closeGallery();
+        return;
+      }
+
+      if (section.classList.contains('is-open')) {
+        closeGallery();
+      } else {
+        openGallery();
+      }
+    });
+
+    overlay?.addEventListener('click', (event) => {
+      if (event.target === overlay) {
+        closeGallery();
+      }
+    });
+
+    closeButton?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      closeGallery();
+    });
+
+    section.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        if (section.classList.contains('is-open')) {
+          closeGallery();
+        } else {
+          openGallery();
+        }
+      }
+    });
+  });
+</script>

@@ -1,0 +1,609 @@
+/* ==========================================================================
+   ZHADORE — Global Styles & Design System v2
+   Dark luxury, editorial minimalism, gold-accented, high contrast
+   Enhanced with textures, refined typography, smooth animations
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CSS Custom Properties (Design Tokens)
+   -------------------------------------------------------------------------- */
+:root {
+  /* — Colors — */
+  --color-bg: #0a0a0a;
+  --color-bg-elevated: #111111;
+  --color-bg-surface: #1a1a1a;
+  --color-bg-hover: #222222;
+  --color-text: #f0ede8;
+  --color-text-secondary: #9a9490;
+  --color-text-muted: #6a6460;
+  --color-gold: #c4913a;
+  --color-gold-light: #e8c878;
+  --color-gold-dark: #8a5f1e;
+  --color-gold-dim: rgba(196, 145, 58, 0.15);
+  --color-silver: #d2d2dc;
+  --color-border: #2a2a2a;
+  --color-border-light: #333333;
+  --color-overlay: rgba(10, 10, 10, 0.8);
+
+  /* — Typography — */
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --text-xs: clamp(0.625rem, 0.6rem + 0.1vw, 0.75rem);
+  --text-sm: clamp(0.75rem, 0.7rem + 0.15vw, 0.875rem);
+  --text-base: clamp(0.875rem, 0.85rem + 0.2vw, 1rem);
+  --text-lg: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  --text-xl: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  --text-2xl: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  --text-3xl: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+  --text-4xl: clamp(2rem, 1.4rem + 3vw, 3.5rem);
+  --text-5xl: clamp(2.5rem, 1.5rem + 5vw, 5rem);
+  --text-hero: clamp(3rem, 2rem + 8vw, 7.5rem);
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+  --leading-loose: 2;
+
+  --tracking-tight: -0.03em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+  --tracking-widest: 0.2em;
+
+  /* — Spacing — */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+  --space-5xl: 128px;
+  --space-6xl: 192px;
+
+  --section-padding: clamp(80px, 15vh, 160px);
+  --content-max: 1200px;
+  --content-padding: 24px;
+
+  /* — Borders & Radii — */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-full: 9999px;
+
+  /* — Shadows — */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-gold: 0 0 40px rgba(196, 145, 58, 0.1);
+  --shadow-gold-sm: 0 0 12px rgba(196, 145, 58, 0.08);
+
+  /* — Transitions — */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-gold: 800ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* — Z-Index — */
+  --z-base: 1;
+  --z-nav: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-cookie: 400;
+}
+
+/* --------------------------------------------------------------------------
+   Reset & Base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 300;
+  line-height: var(--leading-relaxed);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+  /* Subtle noise texture overlay with enhanced golden glitter */
+  background-image:
+    radial-gradient(circle at 15% 30%, rgba(196, 145, 58, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 70%, rgba(232, 200, 120, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(196, 145, 58, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 50%, rgba(196, 145, 58, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(232, 200, 120, 0.02) 0%, transparent 50%);
+  background-attachment: fixed;
+  background-size: 200% 200%;
+  animation: glitterFlow 20s ease-in-out infinite;
+}
+
+/* Enhanced glitter animation */
+@keyframes glitterFlow {
+  0% {
+    background-position: 0% 0%, 100% 100%, 50% 50%, 0% 50%, 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%, 0% 0%, 50% 50%, 100% 50%, 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%, 100% 100%, 50% 50%, 0% 50%, 100% 0%;
+  }
+}
+
+/* Glitter sparkle particles */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1px 1px at 10% 20%, rgba(232, 200, 120, 0.8), rgba(232, 200, 120, 0)),
+    radial-gradient(1px 1px at 20% 30%, rgba(196, 145, 58, 0.6), rgba(196, 145, 58, 0)),
+    radial-gradient(1px 1px at 50% 50%, rgba(232, 200, 120, 0.7), rgba(232, 200, 120, 0)),
+    radial-gradient(1px 1px at 80% 10%, rgba(196, 145, 58, 0.5), rgba(196, 145, 58, 0)),
+    radial-gradient(1px 1px at 90% 60%, rgba(232, 200, 120, 0.6), rgba(232, 200, 120, 0)),
+    radial-gradient(1px 1px at 30% 80%, rgba(196, 145, 58, 0.7), rgba(196, 145, 58, 0)),
+    radial-gradient(1px 1px at 70% 70%, rgba(232, 200, 120, 0.5), rgba(232, 200, 120, 0)),
+    radial-gradient(1px 1px at 40% 40%, rgba(196, 145, 58, 0.6), rgba(196, 145, 58, 0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  pointer-events: none;
+  z-index: 1;
+  animation: sparkle 4s ease-in-out infinite;
+  opacity: 0.4;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-10px);
+  }
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1px 1px at 25% 15%, rgba(232, 200, 120, 0.9), rgba(232, 200, 120, 0)),
+    radial-gradient(1px 1px at 60% 25%, rgba(196, 145, 58, 0.7), rgba(196, 145, 58, 0)),
+    radial-gradient(1px 1px at 35% 60%, rgba(232, 200, 120, 0.8), rgba(232, 200, 120, 0)),
+    radial-gradient(1px 1px at 75% 85%, rgba(196, 145, 58, 0.6), rgba(196, 145, 58, 0));
+  background-repeat: repeat;
+  background-size: 150px 150px;
+  pointer-events: none;
+  z-index: 1;
+  animation: sparkleAlt 6s ease-in-out infinite reverse;
+  opacity: 0.35;
+}
+
+@keyframes sparkleAlt {
+  0%, 100% {
+    opacity: 0.15;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.45;
+    transform: translateY(-15px);
+  }
+}
+
+body::after {
+  background-attachment: fixed;
+}
+
+/* --------------------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+h1 {
+  font-size: var(--text-hero);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: var(--text-4xl);
+}
+
+h3 {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+}
+
+p {
+  margin-bottom: var(--space-md);
+  color: var(--color-text-secondary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-gold);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+strong {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+em {
+  font-style: italic;
+}
+
+/* --------------------------------------------------------------------------
+   Focus Styles
+   -------------------------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* --------------------------------------------------------------------------
+   Selection
+   -------------------------------------------------------------------------- */
+::selection {
+  background-color: var(--color-gold);
+  color: var(--color-bg);
+}
+
+/* --------------------------------------------------------------------------
+   Scrollbar
+   -------------------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-light);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-dark);
+}
+
+/* --------------------------------------------------------------------------
+   Skip Link
+   -------------------------------------------------------------------------- */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: var(--space-md);
+  z-index: var(--z-modal);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--color-gold);
+  color: var(--color-bg) !important;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: var(--space-md);
+}
+
+/* --------------------------------------------------------------------------
+   Utility Classes
+   -------------------------------------------------------------------------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
+}
+
+.section {
+  padding: var(--section-padding) 0;
+}
+
+/* — Gold Text — */
+.text-gold {
+  color: var(--color-gold);
+}
+
+/* — Eyebrow / Label — */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: var(--space-md);
+}
+
+/* — Divider / Rule — */
+.rule {
+  width: 40px;
+  height: 1px;
+  background: var(--color-gold);
+  margin: var(--space-lg) 0;
+  border: none;
+}
+
+.rule-centered {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Image Loading States
+   -------------------------------------------------------------------------- */
+img {
+  transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+img[loading="lazy"] {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+img[loading="lazy"].loaded,
+img:not([loading="lazy"]) {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* --------------------------------------------------------------------------
+   Button Styles
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  padding: var(--space-md) var(--space-xl);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--color-gold);
+  color: var(--color-bg);
+}
+
+.btn-primary:hover {
+  background: var(--color-gold-light);
+  color: var(--color-bg);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-gold);
+  border: 1px solid var(--color-gold);
+}
+
+.btn-ghost:hover {
+  background: var(--color-gold-dim);
+  border-color: var(--color-gold-light);
+  color: var(--color-gold-light);
+}
+
+/* --------------------------------------------------------------------------
+   Section Dividers
+   -------------------------------------------------------------------------- */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-gold) 20%,
+    var(--color-gold-light) 50%,
+    var(--color-gold) 80%,
+    transparent
+  );
+  border: none;
+}
+
+/* --------------------------------------------------------------------------
+   Section Headings
+   -------------------------------------------------------------------------- */
+.section-heading {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-lg);
+}
+
+.section-heading strong {
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+.section-subtitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  font-weight: 300;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+}
+
+/* — Enhanced Heading Styles — */
+h1 { font-weight: 700; letter-spacing: var(--tracking-tight); }
+h2 { font-weight: 600; letter-spacing: var(--tracking-tight); }
+h3 { font-weight: 600; letter-spacing: var(--tracking-normal); }
+h4, h5, h6 { font-weight: 500; }
+
+h1, h2, h3 { color: var(--color-text); }
+h4, h5, h6 { color: var(--color-text-secondary); }
+
+/* — Gold-accented Text — */
+strong {
+  font-weight: 600;
+}
+
+em {
+  font-style: italic;
+  color: var(--color-gold-light);
+}
+
+/* — Improved Link Styling — */
+a {
+  position: relative;
+  color: var(--color-gold);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+a:hover {
+  color: var(--color-gold-light);
+}
+
+/* — Better Contrast for Secondary Text — */
+.text-secondary {
+  color: var(--color-text-secondary);
+  font-weight: 300;
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+/* — Refined Dividers — */
+hr, .divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-border-light) 20%,
+    var(--color-border-light) 80%,
+    transparent
+  );
+  margin: var(--space-3xl) 0;
+}
+
+
+
+/* --------------------------------------------------------------------------
+   Nav Scroll Effect (applied via JS)
+   -------------------------------------------------------------------------- */
+#header.scrolled .nav {
+  background: rgba(10, 10, 10, 0.98);
+  border-bottom-color: rgba(196, 145, 58, 0.2);
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   Page Transitions
+   -------------------------------------------------------------------------- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+/* --------------------------------------------------------------------------
+   Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  img[loading="lazy"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  body {
+    background-attachment: scroll;
+  }
+}

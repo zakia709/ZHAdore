@@ -1,0 +1,33 @@
+---
+// src/components/SkipLink.astro
+// WCAG 2.4.1 — Bypass Blocks: Skip to main content link
+---
+<a class="skip-link" href="#main-content">
+  Skip to main content
+</a>
+
+<style>
+  .skip-link {
+    position: fixed;
+    top: -100%;
+    left: var(--space-md);
+    z-index: 9999;
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--color-gold);
+    color: var(--color-bg) !important;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: top var(--transition-fast);
+  }
+
+  .skip-link:focus {
+    top: var(--space-md);
+    outline: 2px solid var(--color-bg);
+    outline-offset: 2px;
+  }
+</style>

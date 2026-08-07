@@ -1,0 +1,150 @@
+# site-config.ts
+# ZHADORE — Site-Wide Configuration & Brand Identity
+# =============================================================================
+# This file defines all site-wide constants, brand metadata, navigation, 
+# social links, and SEO base configuration used throughout the website.
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# BRAND IDENTITY
+# ---------------------------------------------------------------------------
+brand:
+  name: "ZHADORE"
+  pronunciation: "zha·DORE"
+  collection_name: "AMBIVALENCE"
+  season: "Spring/Summer 2026"
+  season_code: "SS 2026"
+  short_description: "Handmade luxury fashion brand. Dark, intentional, worn like armor."
+  tagline: "Handmade. Intentional. Worn like armor."
+  internal_motto: "Two women. One brand. Built from scratch. Still building."
+  brand_voice:
+    - Bold
+    - Dark
+    - Elegant
+    - Unapologetic
+    - Intimate
+    - Intentional
+    - Handcrafted
+  brand_archetypes:
+    - "The Creator"
+    - "The Ruler"
+  aesthetic:
+    - "Dark luxury"
+    - "Editorial minimalism"
+    - "Gold-accented"
+    - "High contrast"
+    - "Textural"
+    - "Hand-finished"
+
+# ---------------------------------------------------------------------------
+# SITE IDENTITY
+# ---------------------------------------------------------------------------
+site:
+  name: "ZHADORE Official"
+  base_url: "https://zhadore.com"                   # TARGET custom domain
+  current_url: "https://zh-adore-xg5g.vercel.app"   # CURRENT Vercel deployment
+  language: "en"
+  charset: "UTF-8"
+  viewport: "width=device-width, initial-scale=1.0"
+  theme_color: "#0A0A0A"
+
+# ---------------------------------------------------------------------------
+# NAVIGATION
+# ---------------------------------------------------------------------------
+navigation:
+  primary:
+    - label: "Collection"
+      href: "#collection"
+      order: 1
+    - label: "Themes"
+      href: "#themes"
+      order: 2
+    - label: "About"
+      href: "#about"
+      order: 3
+    - label: "Contact"
+      href: "#contact"
+      order: 4
+
+  footer:
+    primary:
+      - label: "Collection"
+        href: "#collection"
+      - label: "Themes"
+        href: "#themes"
+      - label: "About"
+        href: "#about"
+      - label: "Contact"
+        href: "#contact"
+    legal:
+      - label: "Privacy Policy"
+        href: "/privacy"
+      - label: "Terms of Service"
+        href: "/terms"
+      - label: "Accessibility Statement"
+        href: "/accessibility"
+
+# ---------------------------------------------------------------------------
+# CONTACT & SOCIAL
+# ---------------------------------------------------------------------------
+contact:
+  email:
+    address: "Zhadoree@gmail.com"
+    subject_prefix: "ZHADORE Inquiry"
+    display: "Zhadoree@gmail.com"
+  instagram:
+    handle: "@zh.adore"
+    url: "https://www.instagram.com/zh.adore/"
+    display: "@zh.adore"
+  linkedin_founders:
+    - name: "Zhareal Popa"
+      url: "https://www.linkedin.com/in/zhareal-popa-/"
+    - name: "Zakia Yesmin"
+      url: "https://www.linkedin.com/in/zakia-yesmin-061321308/"
+  location:
+    design_studio: "Portland, Oregon, USA"
+    tech_operations: "New York, New York, USA"
+
+# ---------------------------------------------------------------------------
+# SEO BASE DEFAULTS
+# ---------------------------------------------------------------------------
+seo:
+  default_title: "ZHADORE — AMBIVALENCE · SS 2026 | Handmade Luxury Fashion"
+  default_description: >-
+    ZHADORE is a handbuilt luxury fashion brand by Zhareal Popa & Zakia Yesmin. 
+    Discover the AMBIVALENCE SS 2026 collection — DRESSED IN INTENTION, 
+    IT'S BUSINESS BABE, EXTRA-VAGENT. Handmade. Intentional. Worn like armor.
+  default_og_image: "/images/og/zhadore-og-image.jpg"
+  default_og_image_width: 1200
+  default_og_image_height: 630
+  twitter_handle: "@zhadore"
+  twitter_card_type: "summary_large_image"
+  og_type: "website"
+  site_name: "ZHADORE"
+  locale: "en_US"
+  robots: "index, follow"
+  googlebot: "index, follow"
+
+# ---------------------------------------------------------------------------
+# COPYRIGHT
+# ---------------------------------------------------------------------------
+copyright:
+  holder: "ZHADORE"
+  start_year: 2025
+  notice: "ALL RIGHTS RESERVED"
+
+# ---------------------------------------------------------------------------
+# PERFORMANCE HINTS
+# ---------------------------------------------------------------------------
+performance:
+  font_display: "swap"
+  google_fonts:
+    - family: "Playfair Display"
+      weights: [300, 400, 700]
+      styles: [normal, italic]
+    - family: "Jost"
+      weights: [200, 300, 400, 500, 900]
+      styles: [normal]
+  image_formats: ["webp", "jpg"]
+  image_quality: 80
+  lazy_loading_threshold: "100px"

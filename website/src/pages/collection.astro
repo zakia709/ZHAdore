@@ -1,0 +1,493 @@
+---
+// src/pages/collection.astro
+// ZHADORE — Complete Collection Gallery
+// Slideshow + 5-row x 4-column structured grid layout
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { site } from '@data/site';
+
+const looks = [
+  {
+    number: 1,
+    name: 'Ophiophagus',
+    model: 'Ipo',
+    inspiration: 'Inspired by the king cobra — the snake eater. Fabrics selected for their intricate details, reflecting both strength and softness. Structure meets fluid movement in harmonious composition.',
+    specs: [
+      { label: 'Corset', value: '100% Cotton Canvas' },
+      { label: 'Jacket', value: '100% Polyester plain weave' },
+      { label: 'Pants', value: '100% Polyester plain weave' },
+      { label: 'Lining', value: '100% Silk' },
+      { label: 'Trims', value: 'Grommets · Invisible Zipper · Steel Boning · Casing' },
+    ],
+    frontImage: '/images/look1-front.jpg',
+    frontAlt: 'Ophiophagus — front',
+    backImage: '/images/look1-back.jpg',
+    backAlt: 'Ophiophagus — back',
+    detailImage: '/images/look1-detail.jpg',
+    detailAlt: 'Ophiophagus — detail',
+  },
+  {
+    number: 2,
+    name: 'Veil of Command',
+    model: 'Reem',
+    inspiration: 'Inspired by the dark feminine. The darker outer layer functions as a veil — a powerful exterior that conceals the light existing just beneath the surface. Beauty found within darkness.',
+    specs: [
+      { label: 'Bodice', value: '100% Polyester Sequin' },
+      { label: 'Layer', value: '100% Polyester Liquid Organza' },
+      { label: 'Lining', value: '100% Silk' },
+      { label: 'Trims', value: 'Grommets · Elastic Bands' },
+    ],
+    frontImage: '/images/look2-front.jpg',
+    frontAlt: 'Veil of Command — front',
+    backImage: '/images/look2-back.jpg',
+    backAlt: 'Veil of Command — back',
+    detailImage: '/images/look2-detail.jpg',
+    detailAlt: 'Veil of Command — detail',
+  },
+  {
+    number: 3,
+    name: 'Pyre',
+    model: 'Jordyn',
+    inspiration: 'Inspired by fire — specifically the hottest point of the flame. The bodice fabric is not black but deep blue. Its luster evokes the glowing edges of burning coal. Cool meets intense.',
+    specs: [
+      { label: 'Bodice', value: '100% Polyester Unclipped Extra Yarn Weave' },
+      { label: 'Lining', value: '100% Polyester plain weave' },
+      { label: 'Trims', value: '1/4" Metallic Gold Buttons' },
+    ],
+    frontImage: '/images/look3-front.jpg',
+    frontAlt: 'Pyre — front',
+    backImage: '/images/look3-back.jpg',
+    backAlt: 'Pyre — back',
+    detailImage: '/images/look3-detail.jpg',
+    detailAlt: 'Pyre — detail',
+  },
+  {
+    number: 4,
+    name: 'Kala',
+    model: 'Kelsey',
+    inspiration: 'Inspired by the seashores of the Hawaiian Islands. Fabric evokes the texture and color of sandy shores. Shell charms echo the natural rhythms of the ocean — the crashing of waves, the collision of rocks beneath the water.',
+    specs: [
+      { label: 'Bodice', value: 'Lightweight Metallic Lurex Shiny Stretch Polyester Jersey Knit' },
+      { label: 'Trims', value: 'Flat round natural shell charms' },
+    ],
+    frontImage: '/images/look4-front.jpg',
+    frontAlt: 'Kala — front',
+    backImage: '/images/look4-back.jpg',
+    backAlt: 'Kala — back',
+    detailImage: '/images/look4-detail.jpg',
+    detailAlt: 'Kala — detail',
+  },
+];
+
+const groupPhotoImage = '/images/group-photo.jpg';
+---
+
+<BaseLayout
+  title="Collection — AMBIVALENCE · SS 2026 | ZHADORE"
+  description="Explore the complete AMBIVALENCE SS 2026 collection by ZHADORE. Four handcrafted looks: Ophiophagus, Veil of Command, Pyre, and Kala."
+  canonicalURL="https://zhadore.com/collection"
+>
+
+  <div class="collection-page">
+    <!-- Section Header -->
+    <section class="collection-header">
+      <div class="header-content">
+        <div class="eyebrow">SS 2026 · THE COLLECTION</div>
+        <h1>Four looks. Four women. One vision.</h1>
+        <p class="header-subtitle">Each piece named. Each piece built by hand.</p>
+      </div>
+    </section>
+
+    <!-- Main Grid -->
+    <section class="grid-section">
+      <div class="container">
+        <div class="collection-grid">
+          <!-- Row 1: Front Photos -->
+          {looks.map((look) => (
+            <div class={`grid-cell photo-cell front-row`} data-look={look.number}>
+              <div class="photo-wrapper">
+                <img src={look.frontImage} alt={look.frontAlt} loading="lazy" />
+                <div class="hover-overlay">
+                  <div class="overlay-content">
+                    <h3 class="overlay-garment">{look.name}</h3>
+                    <p class="overlay-inspiration">{look.inspiration}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <!-- Row 2: Back Photos -->
+          {looks.map((look) => (
+            <div class={`grid-cell photo-cell back-row`} data-look={look.number}>
+              <div class="photo-wrapper">
+                <img src={look.backImage} alt={look.backAlt} loading="lazy" />
+                <div class="hover-overlay">
+                  <div class="overlay-content">
+                    <h3 class="overlay-garment">{look.name}</h3>
+                    <p class="overlay-inspiration">{look.inspiration}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <!-- Row 3: Detail Photos -->
+          {looks.map((look) => (
+            <div class={`grid-cell photo-cell detail-row`} data-look={look.number}>
+              <div class="photo-wrapper">
+                <img src={look.detailImage} alt={look.detailAlt} loading="lazy" />
+                <div class="hover-overlay">
+                  <div class="overlay-content">
+                    <h3 class="overlay-garment">{look.name}</h3>
+                    <p class="overlay-inspiration">{look.inspiration}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <!-- Row 4: Group Photo (Full Width) -->
+          <div class="grid-cell group-photo-cell">
+            <div class="group-photo-wrapper">
+              <img src={groupPhotoImage} alt="Zhadore SS2026 — full collection" loading="lazy" />
+            </div>
+          </div>
+
+          <!-- Row 5: Specifications Cards -->
+          {looks.map((look) => (
+            <div class="grid-cell spec-card-cell">
+              <div class="spec-card">
+                <div class="spec-gold-accent"></div>
+                <h3 class="spec-title">Look {look.number} · {look.name}</h3>
+                <div class="spec-list">
+                  {look.specs.map((spec) => (
+                    <div class="spec-item">
+                      <span class="spec-label">{spec.label}:</span>
+                      <span class="spec-value">{spec.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Gold lines above and below group photo -->
+    <style is:inline>
+      .group-photo-section-divider-top,
+      .group-photo-section-divider-bottom {
+        height: 1px;
+        background: rgba(196, 145, 58, 0.3);
+      }
+    </style>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .collection-page {
+    background: #080808;
+  }
+
+  /* Section Header */
+  .collection-header {
+    padding: 80px 52px 48px;
+    text-align: center;
+  }
+
+  .header-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .header-content .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(196, 145, 58, 0.8);
+    margin-bottom: 16px;
+  }
+
+  .header-content h1 {
+    font-family: var(--font-serif);
+    font-size: 48px;
+    font-style: italic;
+    color: #F4EFE6;
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+  }
+
+  .header-subtitle {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(244, 239, 230, 0.4);
+    margin: 0;
+  }
+
+  /* Grid Section */
+  .grid-section {
+    background: #080808;
+    padding: 48px 52px;
+  }
+
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+    background: #080808;
+  }
+
+  /* Grid Cells */
+  .grid-cell {
+    background: #080808;
+  }
+
+  /* Photo Cells */
+  .photo-cell {
+    position: relative;
+  }
+
+  .photo-wrapper {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    background: #111111;
+  }
+
+  .photo-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .placeholder-img {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(196, 145, 58, 0.2);
+    font-size: 12px;
+  }
+
+  /* Hover Overlay */
+  .hover-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.1) 60%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+  }
+
+  .photo-wrapper:hover .hover-overlay {
+    opacity: 1;
+  }
+
+  .overlay-content {
+    width: 100%;
+    border-bottom: 1px solid rgba(196, 145, 58, 0.4);
+    padding-bottom: 16px;
+  }
+
+  .overlay-garment {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-style: italic;
+    color: #F4EFE6;
+    margin: 0 0 8px 0;
+  }
+
+  .overlay-inspiration {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(244, 239, 230, 0.7);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Group Photo Cell */
+  .group-photo-cell {
+    grid-column: 1 / -1;
+    position: relative;
+  }
+
+  .group-photo-wrapper {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: #111111;
+  }
+
+  .group-photo-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .placeholder-img-group {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(196, 145, 58, 0.2);
+    font-size: 14px;
+  }
+
+  /* Group Photo Gold Lines */
+  .group-photo-cell::before,
+  .group-photo-cell::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background: rgba(196, 145, 58, 0.3);
+  }
+
+  /* Specification Cards */
+  .spec-card-cell {
+    padding: 0;
+  }
+
+  .spec-card {
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 4px;
+    padding: 28px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .spec-gold-accent {
+    width: 32px;
+    height: 1px;
+    background: #C4913A;
+    margin-bottom: 20px;
+  }
+
+  .spec-title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-style: italic;
+    color: #F4EFE6;
+    letter-spacing: 1px;
+    margin: 0 0 16px 0;
+  }
+
+  .spec-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .spec-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .spec-label {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: rgba(196, 145, 58, 0.8);
+    text-transform: uppercase;
+  }
+
+  .spec-value {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(244, 239, 230, 0.5);
+    line-height: 1.8;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .collection-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .header-content h1 {
+      font-size: 32px;
+    }
+
+    .header-subtitle {
+      font-size: 12px;
+    }
+
+    .collection-header {
+      padding: 60px 28px 36px;
+    }
+
+    .grid-section {
+      padding: 36px 28px;
+    }
+
+    .overlay-garment {
+      font-size: 16px;
+    }
+
+    .overlay-inspiration {
+      font-size: 11px;
+    }
+
+    .spec-title {
+      font-size: 14px;
+    }
+
+    .spec-label {
+      font-size: 9px;
+    }
+
+    .spec-value {
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .collection-grid {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .header-content h1 {
+      font-size: 24px;
+    }
+
+    .collection-header {
+      padding: 48px 16px 28px;
+    }
+
+    .grid-section {
+      padding: 24px 16px;
+    }
+
+    .spec-card {
+      padding: 20px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hover-overlay {
+      opacity: 0;
+      transition: none;
+    }
+    .photo-wrapper:hover .hover-overlay {
+      opacity: 0;
+    }
+  }
+</style>

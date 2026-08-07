@@ -1,0 +1,61 @@
+---
+// src/components/ContactLink.astro
+// Email or social link with icon
+export interface Props {
+  type: 'email' | 'instagram';
+  url: string;
+  display: string;
+  label: string;
+  target?: string;
+  rel?: string;
+}
+const { type, url, display, label, target, rel } = Astro.props;
+---
+
+<a
+  href={url}
+  class="contact-link"
+  aria-label={label}
+  target={target}
+  rel={rel}
+>
+  <span class="contact-link-icon" aria-hidden="true">
+    {type === 'email' ? (
+      <svg viewBox="0 0 24 24" width="20" height="20">
+        <rect x="2" y="4" width="20" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <polyline points="2,4 12,13 22,4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    ) : (
+      <svg viewBox="0 0 24 24" width="20" height="20">
+        <rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+    )}
+  </span>
+  {display}
+</a>
+
+<style>
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-sans);
+    font-size: var(--text-lg);
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    padding: var(--space-sm) 0;
+    transition: color var(--transition-fast);
+  }
+
+  .contact-link:hover {
+    color: var(--color-gold);
+  }
+
+  .contact-link-icon {
+    display: flex;
+    align-items: center;
+    color: var(--color-gold);
+  }
+</style>

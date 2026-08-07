@@ -1,0 +1,16 @@
+{
+  "name": "ZHADORE",
+  "short_name": "ZHADORE",
+  "description": "Handmade luxury fashion brand. AMBIVALENCE SS 2026.",
+  "start_url": "/",
+  "display": "browser",
+  "theme_color": "#0A0A0A",
+  "background_color": "#0A0A0A",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

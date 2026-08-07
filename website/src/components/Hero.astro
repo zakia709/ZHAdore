@@ -1,0 +1,632 @@
+---
+// src/components/Hero.astro
+// 4-Slide Hero Carousel — dramatic full-bleed images with eye-catching taglines
+// Auto-advancing, keyboard accessible, dot navigation, crossfade transitions
+import { site } from '@data/site';
+
+const slides = [
+  {
+    image: '/images/bae-cay/look%202.png',
+    alt: 'ZHADORE styled portrait from the Bae Cay collection',
+    tagline: 'Darkness',
+    taglineAccent: 'Wears Gold',
+    subtitle: 'The AMBIVALENCE collection. SS 2026.',
+    cta: 'Explore the Collection',
+    ctaHref: '#collection',
+  },
+  {
+    image: '/images/business/Look%201.png',
+    alt: 'ZHADORE wide-leg tailored trouser with satin stripe detail',
+    tagline: 'Built Like an',
+    taglineAccent: 'Empire',
+    subtitle: 'Tailored structure with a sharp, commanding presence.',
+    cta: 'View the Lookbook',
+    ctaHref: '#collection',
+  },
+  {
+    image: '/images/business/look%203%20detail.png',
+    alt: 'ZHADORE oversized power blazer in midnight black',
+    tagline: 'Power Is',
+    taglineAccent: 'Handmade',
+    subtitle: 'No assembly lines. No shortcuts. One maker. One garment.',
+    cta: 'Meet the Founders',
+    ctaHref: '#about',
+  },
+  {
+    image: '/images/extravagent/look%204%20front.jpg',
+    alt: 'ZHADORE dramatic cape with gold chain detailing',
+    tagline: 'Worn Like',
+    taglineAccent: 'Armor',
+    subtitle: 'Handbuilt drama, deliberate detail, and unapologetic presence.',
+    cta: 'Discover the Story',
+    ctaHref: '/story',
+  },
+];
+---
+
+<section class="hero" id="hero" aria-label="ZHADORE featured collection slideshow" aria-roledescription="carousel">
+  <!-- Static Intro Header -->
+  <div class="hero-intro" aria-hidden="true">
+    <div class="hero-intro-container">
+      <div class="hero-intro-text">
+        <div class="hero-intro-name">
+          ZHADORE
+        </div>
+        <div class="hero-intro-meta">
+          <span>AMBIVALENCE</span>
+          <span class="hero-intro-separator">·</span>
+          <span>SS 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slides -->
+  <div class="hero-slides" id="hero-slides" aria-live="polite">
+    {slides.map((slide, i) => (
+      <div
+        class={`hero-slide ${i === 0 ? 'active' : ''}`}
+        id={`hero-slide-${i}`}
+        role="group"
+        aria-roledescription="slide"
+        aria-label={`Slide ${i + 1} of ${slides.length}: ${slide.tagline} ${slide.taglineAccent}`}
+      >
+        <div class="hero-slide-bg">
+          <img
+            src={slide.image}
+            alt={slide.alt}
+            width="1200"
+            height="1600"
+            fetchpriority={i === 0 ? 'high' : 'low'}
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        </div>
+        <div class="hero-slide-overlay" aria-hidden="true"></div>
+        <div class="hero-slide-content">
+          <div class="hero-tagline-wrap">
+            <span class="hero-tagline">{slide.tagline}</span>
+            <span class="hero-tagline-accent">{slide.taglineAccent}</span>
+          </div>
+          <div class="hero-rule" aria-hidden="true"></div>
+          <p class="hero-subtitle">{slide.subtitle}</p>
+          <a href={slide.ctaHref} class="hero-cta">{slide.cta}</a>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Canvas ambiance layer -->
+  <canvas id="ambient-canvas" aria-hidden="true" role="presentation"></canvas>
+
+  <!-- Navigation Arrows -->
+  <button class="hero-arrow hero-arrow-prev" id="hero-prev" aria-label="Previous slide" type="button">
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><polyline points="15,4 7,12 15,20" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+  </button>
+  <button class="hero-arrow hero-arrow-next" id="hero-next" aria-label="Next slide" type="button">
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><polyline points="9,4 17,12 9,20" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+  </button>
+
+  <!-- Dot Indicators -->
+  <div class="hero-dots" role="tablist" aria-label="Slide navigation">
+    {slides.map((_, i) => (
+      <button
+        class={`hero-dot ${i === 0 ? 'active' : ''}`}
+        id={`hero-dot-${i}`}
+        role="tab"
+        aria-selected={i === 0 ? 'true' : 'false'}
+        aria-label={`Go to slide ${i + 1}`}
+        aria-controls={`hero-slide-${i}`}
+        type="button"
+      ></button>
+    ))}
+  </div>
+
+  <!-- Gold Line -->
+  <div class="hero-gold-line" aria-hidden="true">
+    <svg class="hero-line-svg" viewBox="0 0 1440 3" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="transparent"/><stop offset="20%" stop-color="#C4913A"/>
+          <stop offset="50%" stop-color="#E8C878"/><stop offset="80%" stop-color="#C4913A"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </linearGradient>
+      </defs>
+      <line class="gold-line-path" x1="0" y1="1.5" x2="1440" y2="1.5" stroke="url(#goldGrad)" stroke-width="1.5" stroke-dasharray="1440" stroke-dashoffset="1440"/>
+    </svg>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="hero-scroll-line"></div>
+    <span>SCROLL</span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 650px;
+    overflow: hidden;
+    background: var(--color-bg);
+  }
+
+  /* Static Intro Header */
+  .hero-intro {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    height: 140px;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.6), rgba(10,10,10,0.2), transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+  }
+
+  .hero-intro-container {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3xl);
+    padding: var(--space-2xl) var(--content-padding);
+    max-width: var(--content-max);
+    width: 100%;
+  }
+
+  .hero-intro-brand {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: var(--color-gold);
+    letter-spacing: var(--tracking-tight);
+    min-width: 60px;
+  }
+
+  .hero-intro-z {
+    display: block;
+  }
+
+  .hero-intro-text {
+    flex: 1;
+  }
+
+  .hero-intro-name {
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+  }
+
+  .hero-intro-meta {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+  }
+
+  .hero-intro-separator {
+    color: var(--color-gold);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 768px) {
+    .hero-intro-container {
+      gap: var(--space-2xl);
+      flex-direction: column;
+      text-align: center;
+      height: auto;
+    }
+    .hero-intro {
+      height: auto;
+      padding: var(--space-xl) 0;
+    }
+  }
+
+  /* Slides container */
+  .hero-slides {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Individual slide */
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+  .hero-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Background image */
+  .hero-slide-bg {
+    position: absolute;
+    inset: 0;
+  }
+  .hero-slide-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    transform: scale(1.05);
+    transition: transform 8s ease-out;
+  }
+  .hero-slide.active .hero-slide-bg img {
+    transform: scale(1);
+  }
+
+  /* Overlay */
+  .hero-slide-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(10, 10, 10, 0.85) 0%,
+      rgba(10, 10, 10, 0.55) 40%,
+      rgba(10, 10, 10, 0.25) 70%,
+      rgba(10, 10, 10, 0.15) 100%
+    );
+  }
+
+  /* Slide content */
+  .hero-slide-content {
+    position: absolute;
+    left: clamp(24px, 8vw, 120px);
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 650px;
+    z-index: 2;
+  }
+
+  .hero-tagline-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .hero-tagline {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+    color: var(--color-text);
+    line-height: 1;
+    letter-spacing: var(--tracking-tight);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+  }
+
+  .hero-tagline-accent {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 700;
+    color: var(--color-gold);
+    line-height: 0.9;
+    letter-spacing: var(--tracking-tight);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+    margin-bottom: var(--space-sm);
+  }
+
+  .hero-slide.active .hero-tagline,
+  .hero-slide.active .hero-tagline-accent {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-rule {
+    width: 50px;
+    height: 1.5px;
+    background: linear-gradient(90deg, var(--color-gold), transparent);
+    margin: clamp(16px, 3vh, 32px) 0;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 480px;
+    margin-bottom: clamp(24px, 4vh, 40px);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.7s;
+    letter-spacing: var(--tracking-normal);
+  }
+
+  .hero-slide.active .hero-subtitle {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-bg);
+    background: var(--color-gold);
+    padding: clamp(10px, 1.5vw, 14px) clamp(20px, 3vw, 32px);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.9s, background var(--transition-fast);
+    border: 1px solid transparent;
+  }
+
+  .hero-slide.active .hero-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-cta:hover {
+    background: var(--color-gold-light);
+    color: var(--color-bg);
+    box-shadow: var(--shadow-gold);
+    transform: translateY(-2px);
+  }
+
+  /* Canvas ambiance */
+  #ambient-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  /* Arrows */
+  .hero-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    background: rgba(10, 10, 10, 0.3);
+    border: 1px solid rgba(196, 145, 58, 0.2);
+    color: var(--color-text);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: all var(--transition-base);
+  }
+
+  .hero-arrow:hover {
+    background: rgba(10, 10, 10, 0.7);
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+  }
+
+  .hero-arrow-prev { left: var(--space-md); }
+  .hero-arrow-next { right: var(--space-md); }
+
+  /* Dots */
+  .hero-dots {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    gap: var(--space-sm);
+  }
+
+  .hero-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--color-gold-dim);
+    background: transparent;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    padding: 0;
+  }
+
+  .hero-dot.active {
+    background: var(--color-gold);
+    border-color: var(--color-gold);
+    box-shadow: 0 0 8px rgba(196, 145, 58, 0.4);
+  }
+
+  .hero-dot:hover {
+    border-color: var(--color-gold);
+  }
+
+  /* Gold Line */
+  .hero-gold-line {
+    position: absolute;
+    bottom: 70px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    height: 3px;
+  }
+  .hero-line-svg { display: block; width: 100%; height: 3px; }
+  .gold-line-path {
+    animation: goldDraw 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: 1.2s;
+  }
+  @keyframes goldDraw { to { stroke-dashoffset: 0; } }
+
+  /* Scroll indicator */
+  .hero-scroll {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+  .hero-scroll-line {
+    width: 1px;
+    height: 32px;
+    background: linear-gradient(to bottom, var(--color-gold), var(--color-gold-light), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  .hero-scroll span {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-muted);
+  }
+  @keyframes scrollPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero { min-height: 550px; }
+    .hero-slide-overlay {
+      background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.5) 60%, rgba(10,10,10,0.2) 100%);
+    }
+    .hero-slide-content {
+      left: var(--content-padding);
+      right: var(--content-padding);
+      top: auto;
+      bottom: 140px;
+      transform: none;
+      max-width: 100%;
+    }
+    .hero-tagline { font-size: clamp(2rem, 8vw, 3rem); }
+    .hero-tagline-accent { font-size: clamp(2.5rem, 10vw, 4rem); }
+    .hero-dots { bottom: 90px; }
+    .hero-gold-line { bottom: 60px; }
+    .hero-arrow { width: 36px; height: 36px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-slide { transition: opacity 0.3s ease; }
+    .hero-slide-bg img { transition: none; transform: scale(1); }
+    .hero-tagline, .hero-tagline-accent, .hero-subtitle, .hero-cta { transition: opacity 0.3s ease; }
+    .gold-line-path { animation: none; stroke-dashoffset: 0; }
+    .hero-scroll-line { animation: none; opacity: 1; }
+  }
+</style>
+
+<script>
+  const totalSlides = 4;
+  let currentSlide = 0;
+  let autoplayInterval: ReturnType<typeof setInterval> | null = null;
+  let isTransitioning = false;
+
+  const slidesEls = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-dot');
+  const prevBtn = document.getElementById('hero-prev');
+  const nextBtn = document.getElementById('hero-next');
+
+  function goToSlide(index: number) {
+    if (isTransitioning || index === currentSlide) return;
+    isTransitioning = true;
+
+    // Remove active from current
+    slidesEls[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
+    dots[currentSlide].setAttribute('aria-selected', 'false');
+
+    // Set new current
+    currentSlide = index;
+
+    // Add active to new
+    slidesEls[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+    dots[currentSlide].setAttribute('aria-selected', 'true');
+
+    setTimeout(() => { isTransitioning = false; }, 1200);
+  }
+
+  function nextSlide() { goToSlide((currentSlide + 1) % totalSlides); }
+  function prevSlide() { goToSlide((currentSlide - 1 + totalSlides) % totalSlides); }
+
+  // Arrow buttons
+  prevBtn?.addEventListener('click', () => { prevSlide(); resetAutoplay(); });
+  nextBtn?.addEventListener('click', () => { nextSlide(); resetAutoplay(); });
+
+  // Dot buttons
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => { goToSlide(i); resetAutoplay(); });
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { prevSlide(); resetAutoplay(); }
+    if (e.key === 'ArrowRight') { nextSlide(); resetAutoplay(); }
+  });
+
+  // Autoplay
+  function startAutoplay() {
+    autoplayInterval = setInterval(nextSlide, 6000);
+  }
+  function resetAutoplay() {
+    if (autoplayInterval) clearInterval(autoplayInterval);
+    startAutoplay();
+  }
+
+  // Pause on hover
+  const heroEl = document.querySelector('.hero');
+  heroEl?.addEventListener('mouseenter', () => { if (autoplayInterval) clearInterval(autoplayInterval); });
+  heroEl?.addEventListener('mouseleave', startAutoplay);
+
+  // Pause when not visible
+  const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { startAutoplay(); }
+      else { if (autoplayInterval) clearInterval(autoplayInterval); }
+    });
+  }, { threshold: 0.3 });
+  if (heroEl) heroObserver.observe(heroEl);
+
+  // Start
+  startAutoplay();
+
+  // Ambient canvas
+  const ambientCanvas = document.getElementById('ambient-canvas') as HTMLCanvasElement | null;
+  if (ambientCanvas) {
+    const ctx = ambientCanvas.getContext('2d');
+    if (ctx && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let w = 0, h = 0;
+      function resize() { w = ambientCanvas!.width = window.innerWidth; h = ambientCanvas!.height = window.innerHeight; }
+      resize(); window.addEventListener('resize', resize);
+      const particles: { x: number; y: number; vx: number; vy: number; r: number; o: number }[] = [];
+      for (let i = 0; i < 30; i++) {
+        particles.push({ x: Math.random()*w, y: Math.random()*h, vx: (Math.random()-0.5)*0.2, vy: (Math.random()-0.5)*0.2, r: Math.random()*1.5+0.5, o: Math.random()*0.3+0.05 });
+      }
+      function draw() {
+        if (!ctx) return;
+        ctx.clearRect(0,0,w,h);
+        particles.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x<0) p.x=w; if (p.x>w) p.x=0; if (p.y<0) p.y=h; if (p.y>h) p.y=0;
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle = `rgba(196,145,58,${p.o})`; ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+  }
+</script>

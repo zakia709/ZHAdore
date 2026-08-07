@@ -1,0 +1,90 @@
+---
+// src/pages/accessibility.astro
+// ZHADORE Accessibility Statement Page
+import LegalLayout from '@layouts/LegalLayout.astro';
+---
+
+<LegalLayout
+  title="Accessibility Statement — ZHADORE"
+  description="ZHADORE is committed to digital accessibility for people of all abilities. Learn about our WCAG 2.2 AA conformance efforts."
+  canonicalURL="https://zhadore.com/accessibility"
+>
+
+  <h1>Accessibility Statement</h1>
+  <p><strong>Last Updated:</strong> May 16, 2026</p>
+
+  <h2>Our Commitment to Accessibility</h2>
+  <p>
+    ZHADORE is committed to ensuring digital accessibility for people of all abilities. We believe that elegance, luxury, and accessibility are not mutually exclusive. Every aspect of the ZHADORE digital experience should be accessible to all visitors.
+  </p>
+
+  <h2>Conformance Status</h2>
+  <p>
+    The Web Content Accessibility Guidelines (WCAG) define requirements for designers and developers to improve accessibility. <strong>ZHADORE's website is designed to conform to WCAG 2.2 Level AA.</strong> This means we strive to meet all Level A and Level AA success criteria.
+  </p>
+
+  <h2>Accessibility Measures We've Taken</h2>
+
+  <h3>Semantic HTML5 Structure</h3>
+  <p>Our site uses proper semantic HTML5 landmarks including <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;footer&gt;</code>, and <code>&lt;figure&gt;</code> elements, enabling screen reader users to navigate efficiently.</p>
+
+  <h3>Heading Hierarchy</h3>
+  <p>A logical heading structure (h1 &rarr; h2 &rarr; h3) helps all users understand the page organization.</p>
+
+  <h3>Skip Navigation</h3>
+  <p>A "Skip to main content" link is provided as the first focusable element, allowing keyboard users to bypass repeated navigation.</p>
+
+  <h3>Keyboard Navigation</h3>
+  <p>All interactive elements are reachable and operable via keyboard alone, with visible focus indicators throughout.</p>
+
+  <h3>Image Descriptions</h3>
+  <p>All content images include descriptive alternative text. Decorative elements are hidden from assistive technology using <code>aria-hidden</code>.</p>
+
+  <h3>Color Contrast</h3>
+  <p>Text and interactive elements meet or exceed WCAG AA contrast ratios &mdash; 4.5:1 for normal text and 3:1 for large text.</p>
+
+  <h3>Reduced Motion Support</h3>
+  <p>We respect the <code>prefers-reduced-motion</code> CSS media query. When enabled, all animations are disabled or simplified to opacity-only fades.</p>
+
+  <h3>Responsive Design</h3>
+  <p>The site is fully responsive and functional at any viewport width, from mobile (320px) to desktop, with no horizontal scrolling.</p>
+
+  <h3>Canvas Animation Fallbacks</h3>
+  <p>Decorative canvas animations are marked with <code>aria-hidden="true"</code>. A static background fallback is provided for users with JavaScript disabled.</p>
+
+  <h2>Known Limitations & Workarounds</h2>
+  <ul>
+    <li><strong>Canvas animations</strong> &mdash; While canvases are marked decorative, we are exploring ways to provide equivalent atmospheric experiences. <em>Status: Working on it.</em></li>
+    <li><strong>Third-party content</strong> &mdash; Links to Instagram and LinkedIn lead to platforms whose accessibility is managed by those companies. <em>Status: External dependency.</em></li>
+    <li><strong>Lookbook images</strong> &mdash; We are working to implement responsive images (srcset) and modern formats (WebP). <em>Status: Planned improvement.</em></li>
+  </ul>
+
+  <h2>Feedback & Contact Information</h2>
+  <p>
+    We welcome your feedback on the accessibility of the ZHADORE website. If you encounter any accessibility barriers, please contact us:
+  </p>
+  <p>
+    <strong>Email:</strong> <a href="mailto:Zhadoree@gmail.com">Zhadoree@gmail.com</a> (subject: "Accessibility Feedback &mdash; ZHADORE")<br />
+    <strong>Instagram:</strong> <a href="https://www.instagram.com/zh.adore/" target="_blank" rel="noopener noreferrer">@zh.adore</a>
+  </p>
+  <p>We aim to respond to accessibility feedback within 5 business days.</p>
+
+  <h2>Assessment Approach</h2>
+  <p>ZHADORE assesses accessibility through:</p>
+  <ul>
+    <li>Automated testing using Lighthouse and Axe DevTools</li>
+    <li>Manual keyboard-only navigation testing</li>
+    <li>Screen reader testing with NVDA (Windows) and VoiceOver (macOS)</li>
+    <li>Color contrast verification using WebAIM's Contrast Checker</li>
+    <li>HTML validation using the W3C Nu HTML Checker</li>
+    <li>Regular reviews as new content is added</li>
+  </ul>
+
+  <h2>Formal Complaints</h2>
+  <p>
+    If you believe this website does not meet accessibility standards and your concern has not been adequately addressed, you may file a complaint with the appropriate authority, such as the Department of Justice under the Americans with Disabilities Act (ADA).
+  </p>
+
+  <p><em>This statement was created on May 16, 2026. It will be reviewed and updated quarterly.</em></p>
+
+</LegalLayout>

@@ -1,0 +1,695 @@
+---
+// src/pages/index.astro
+// ZHADORE — Enhanced Landing Page
+// Sections: Featured Look → Masonry Gallery → Themes → Editorial →
+// Craft Process → About Founders → Press → Newsletter → Contact
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/Hero.astro';
+import PersonCard from '@components/PersonCard.astro';
+import ContactLink from '@components/ContactLink.astro';
+import { site, themes, founders } from '@data/site';
+
+const allLooks = themes.flatMap(t => t.looks.map(l => ({ ...l, theme: t.name, themeId: t.id })));
+const featured = allLooks[0];
+const editorialLooks = allLooks.slice(6, 10);
+const behindScenes = allLooks.slice(10, 14);
+const collectionRowOne = [
+  {
+    image: '/images/business/look-1.jpg',
+    alt: 'Ipo full blazer',
+    lookNumber: 'LOOK 1',
+    garment: 'Ophiophagus',
+    inspiration: 'Inspired by the king cobra — the snake eater. Fabrics selected for their intricate details, reflecting both strength and softness. Structure meets fluid movement in harmonious composition.'
+  },
+  {
+    image: '/images/bae-cay/look 2.png',
+    alt: 'Reem gold gown',
+    lookNumber: 'LOOK 2',
+    garment: 'Veil of Command',
+    inspiration: 'Inspired by the dark feminine. The darker outer layer functions as a veil — a powerful exterior that conceals the light existing just beneath the surface. Beauty found within darkness.'
+  },
+  {
+    image: '/images/bae-cay/look 3.png',
+    alt: 'Jordyn brown set',
+    lookNumber: 'LOOK 3',
+    garment: 'Pyre',
+    inspiration: 'Inspired by fire — specifically the hottest point of the flame. The bodice fabric is not black but deep blue. The mermaid silhouette catches light like the edge of burning coal. Cool meets intense.'
+  },
+  {
+    image: '/images/extravagent/look 4 front.jpg',
+    alt: 'Kelsey front',
+    lookNumber: 'LOOK 4',
+    garment: 'Kala',
+    inspiration: 'Inspired by the seashores of the Hawaiian Islands. Fabric evokes the texture and color of sandy shores. Shell charms echo the natural rhythms of the ocean — the crashing of waves, the collision of rocks beneath the water.'
+  }
+];
+const collectionRowTwo = [
+  {
+    image: '/images/bae-cay/Look 1.png',
+    alt: 'Ipo blazer closeup',
+    lookNumber: 'LOOK 1',
+    garment: 'Ophiophagus',
+    inspiration: 'Inspired by the king cobra — the snake eater. Fabrics selected for their intricate details, reflecting both strength and softness. Structure meets fluid movement in harmonious composition.'
+  },
+  {
+    image: '/images/extravagent/Look 1 and Look 2.jpg',
+    alt: 'Reem and Ipo',
+    lookNumber: 'LOOK 2',
+    garment: 'Veil of Command',
+    inspiration: 'Inspired by the dark feminine. The darker outer layer functions as a veil — a powerful exterior that conceals the light existing just beneath the surface. Beauty found within darkness.'
+  },
+  {
+    image: '/images/business/look 3 detail.png',
+    alt: 'Jordyn closeup',
+    lookNumber: 'LOOK 3',
+    garment: 'Pyre',
+    inspiration: 'Inspired by fire — specifically the hottest point of the flame. The bodice fabric is not black but deep blue. The mermaid silhouette catches light like the edge of burning coal. Cool meets intense.'
+  },
+  {
+    image: '/images/extravagent/look 4.jpg',
+    alt: 'Kelsey back',
+    lookNumber: 'LOOK 4',
+    garment: 'Kala',
+    inspiration: 'Inspired by the seashores of the Hawaiian Islands. Fabric evokes the texture and color of sandy shores. Shell charms echo the natural rhythms of the ocean — the crashing of waves, the collision of rocks beneath the water.'
+  }
+];
+const collectionRowThree = [
+  {
+    image: '/images/business/Look 1.png',
+    alt: 'Ipo seated',
+    lookNumber: 'LOOK 1',
+    garment: 'Ophiophagus',
+    inspiration: 'Inspired by the king cobra — the snake eater. Fabrics selected for their intricate details, reflecting both strength and softness. Structure meets fluid movement in harmonious composition.'
+  },
+  {
+    image: '/images/bae-cay/look 4 closeup.png',
+    alt: 'Pearl detail',
+    lookNumber: 'LOOK 2',
+    garment: 'Veil of Command',
+    inspiration: 'Inspired by the dark feminine. The darker outer layer functions as a veil — a powerful exterior that conceals the light existing just beneath the surface. Beauty found within darkness.'
+  },
+  {
+    image: '/images/extravagent/look 3.jpg',
+    alt: 'Jordyn seated stool',
+    lookNumber: 'LOOK 3',
+    garment: 'Pyre',
+    inspiration: 'Inspired by fire — specifically the hottest point of the flame. The bodice fabric is not black but deep blue. The mermaid silhouette catches light like the edge of burning coal. Cool meets intense.'
+  },
+  {
+    image: '/images/business/look-4.jpg',
+    alt: 'Jordyn dark back',
+    lookNumber: 'LOOK 4',
+    garment: 'Kala',
+    inspiration: 'Inspired by the seashores of the Hawaiian Islands. Fabric evokes the texture and color of sandy shores. Shell charms echo the natural rhythms of the ocean — the crashing of waves, the collision of rocks beneath the water.'
+  }
+];
+const collectionSpecs = [
+  {
+    title: 'Look 1 · Ophiophagus',
+    specs: [
+      ['Corset', '100% Cotton Canvas'],
+      ['Jacket', '100% Polyester plain weave'],
+      ['Pants', '100% Polyester plain weave'],
+      ['Lining', '100% Silk'],
+      ['Trims', 'Grommets · Invisible Zipper · Steel Boning · Casing']
+    ]
+  },
+  {
+    title: 'Look 2 · Veil of Command',
+    specs: [
+      ['Bodice', '100% Polyester Sequin'],
+      ['Layer', '100% Polyester Liquid Organza'],
+      ['Lining', '100% Silk'],
+      ['Trims', 'Grommets · Elastic Bands']
+    ]
+  },
+  {
+    title: 'Look 3 · Pyre',
+    specs: [
+      ['Bodice', '100% Polyester Unclipped Extra Yarn Weave'],
+      ['Lining', '100% Polyester plain weave'],
+      ['Trims', '1/4" Metallic Gold Buttons']
+    ]
+  },
+  {
+    title: 'Look 4 · Kala',
+    specs: [
+      ['Bodice', 'Lightweight Metallic Lurex Shiny Stretch Polyester Jersey Knit'],
+      ['Trims', 'Flat round natural shell charms']
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title={`${site.name} — ${site.collection} · ${site.season} | Handmade Luxury Fashion`}
+  description={site.description}
+  canonicalURL={site.url}
+>
+  <!-- ===== HERO ===== -->
+  <Hero />
+  <!-- ===== FEATURED LOOK ===== -->
+  <section class="featured-section" aria-labelledby="featured-heading">
+    <div class="container featured-grid">
+      <div class="featured-image reveal">
+        <div class="featured-img-wrap">
+          <img src={`/images/${featured.file}`} alt={featured.alt} width={featured.width} height={featured.height} fetchpriority="high" />
+          <div class="featured-badge" aria-hidden="true">01</div>
+        </div>
+      </div>
+      <div class="featured-content reveal">
+        <div class="eyebrow">FEATURED LOOK</div>
+        <h2 id="featured-heading">The Season's<br />Defining Piece</h2>
+        <div class="rule"></div>
+        <p class="featured-desc">
+          From the <strong>{featured.theme}</strong> theme — where structure meets intention.
+          Handbuilt. Hand-finished. Made to be felt.
+        </p>
+        <div class="featured-meta">
+          <div class="meta-item"><span class="meta-label">Collection</span><span class="meta-value">{site.collection}</span></div>
+          <div class="meta-item"><span class="meta-label">Season</span><span class="meta-value">{site.season}</span></div>
+          <div class="meta-item"><span class="meta-label">Construction</span><span class="meta-value">Handbuilt</span></div>
+        </div>
+        <a href="#collection" class="btn btn-primary">Explore the Collection</a>
+      </div>
+    </div>
+    <div class="section-divider" style="margin-top: var(--space-4xl);"></div>
+  </section>
+
+  <div class="container"><hr class="section-divider" /></div>
+
+  <!-- ===== COLLECTION ===== -->
+  <section id="themes" class="themes-section" aria-labelledby="collection-heading">
+    <div class="collection-shell">
+      <div class="collection-header reveal">
+        <div class="eyebrow collection-eyebrow">SS 2026 · THE COLLECTION</div>
+        <h2 id="collection-heading">Four looks. Four women. One vision.</h2>
+        <p class="collection-subtitle">Each piece named. Each piece built by hand.</p>
+      </div>
+
+      <div class="collection-grid">
+        {collectionRowOne.map((look) => (
+          <article class="collection-cell collection-cell--photo reveal">
+            <img src={look.image} alt={look.alt} loading="lazy" />
+            <div class="collection-overlay">
+              <p class="overlay-label">{look.lookNumber}</p>
+              <h3>{look.garment}</h3>
+              <p>{look.inspiration}</p>
+              <div class="overlay-line"></div>
+            </div>
+          </article>
+        ))}
+
+        {collectionRowTwo.map((look) => (
+          <article class="collection-cell collection-cell--photo reveal">
+            <img src={look.image} alt={look.alt} loading="lazy" />
+            <div class="collection-overlay">
+              <p class="overlay-label">{look.lookNumber}</p>
+              <h3>{look.garment}</h3>
+              <p>{look.inspiration}</p>
+              <div class="overlay-line"></div>
+            </div>
+          </article>
+        ))}
+
+        {collectionRowThree.map((look) => (
+          <article class="collection-cell collection-cell--photo reveal">
+            <img src={look.image} alt={look.alt} loading="lazy" />
+            <div class="collection-overlay">
+              <p class="overlay-label">{look.lookNumber}</p>
+              <h3>{look.garment}</h3>
+              <p>{look.inspiration}</p>
+              <div class="overlay-line"></div>
+            </div>
+          </article>
+        ))}
+
+        <article class="collection-cell collection-cell--group reveal">
+          <img src="/images/extravagent/group-photo.jpg" alt="Group portrait of the four collection looks" loading="lazy" />
+        </article>
+
+        {collectionSpecs.map((card) => (
+          <article class="collection-spec-card reveal">
+            <div class="spec-line"></div>
+            <h3>{card.title}</h3>
+            {card.specs.map(([label, value]) => (
+              <div class="spec-item">
+                <span class="spec-label">{label}</span>
+                <span class="spec-value">{value}</span>
+              </div>
+            ))}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EDITORIAL ===== -->
+  <section class="editorial-section" aria-labelledby="editorial-heading">
+    <div class="editorial-bg" aria-hidden="true"></div>
+    <div class="container editorial-grid reveal">
+      <div class="editorial-visual">
+        {editorialLooks.map((look, i) => (
+          <div class={`editorial-stack-img ${i === 0 ? 'main' : ''}`} aria-hidden="true">
+            <img src={`/images/${look.file}`} alt="" loading="lazy" width={look.width} height={look.height} />
+          </div>
+        ))}
+      </div>
+      <div class="editorial-text">
+        <div class="eyebrow">THE PHILOSOPHY</div>
+        <h2 id="editorial-heading">Darkness<br />Wears Gold</h2>
+        <div class="rule"></div>
+        <blockquote class="editorial-quote">
+          &ldquo;The deeper the shadow, the more deliberately the light finds its way in.&rdquo;
+          <cite>&mdash; Zhareal Popa, Creative Director</cite>
+        </blockquote>
+        <p>ZHADORE is not about following trends. It's about creating garments that honor the woman who wears them — pieces that feel like armor, move like a second skin, and hold meaning far beyond a single season.</p>
+        <p>Every stitch is deliberate. Every fabric choice is intentional. Every silhouette is engineered to empower. This is fashion as craft, not commerce.</p>
+        <a href="/story" class="btn btn-ghost">Read Our Full Story</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><hr class="section-divider" /></div>
+
+  <!-- ===== CRAFT ===== -->
+  <section class="craft-section" aria-labelledby="craft-heading">
+    <div class="container">
+      <div class="section-header reveal text-center">
+        <div class="eyebrow">THE PROCESS</div>
+        <h2 id="craft-heading">Handbuilt, Not Manufactured</h2>
+        <p class="section-subtitle" style="margin: 0 auto;">Every ZHADORE garment passes through a single pair of hands.</p>
+        <div class="rule rule-centered"></div>
+      </div>
+      <div class="craft-grid reveal">
+        <div class="craft-card"><div class="craft-icon" aria-hidden="true">01</div><h3>Design</h3><p>Each piece begins as a vision — sketched, revised, refined until the silhouette is exactly right.</p></div>
+        <div class="craft-card"><div class="craft-icon" aria-hidden="true">02</div><h3>Pattern &amp; Cut</h3><p>Patterns drafted by hand. Fabric cut with precision. No assembly lines. No shortcuts.</p></div>
+        <div class="craft-card"><div class="craft-icon" aria-hidden="true">03</div><h3>Construction</h3><p>Each garment sewn start to finish by one maker. Seams finished by hand.</p></div>
+        <div class="craft-card"><div class="craft-icon" aria-hidden="true">04</div><h3>Finishing</h3><p>Final touches — pressing, hand-stitching, quality checks — ensure every piece is worthy.</p></div>
+      </div>
+      <div class="craft-images reveal">
+        {behindScenes.map((look, i) => (
+          <div class="craft-img-wrap">
+            <img src={`/images/${look.file}`} alt={`${look.theme} — behind the craft`} loading="lazy" width={look.width} height={look.height} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><hr class="section-divider" /></div>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="about-section reveal" id="about" aria-labelledby="about-heading">
+    <div class="container">
+      <div class="section-header text-center">
+        <div class="eyebrow">THE FACES BEHIND IT</div>
+        <h2 id="about-heading"><em>Two women. One brand.</em></h2>
+        <p class="section-subtitle" style="margin: 0 auto;">Built from scratch. Still building.</p>
+        <div class="rule rule-centered"></div>
+      </div>
+      <div class="about-grid">
+        <PersonCard initial={founders.zhareal.initial} label={founders.zhareal.label} name={founders.zhareal.name} role={founders.zhareal.role} bio={founders.zhareal.bio} accentColor={founders.zhareal.accentColor} email={founders.zhareal.email} linkedin={founders.zhareal.linkedin} emailLabel={`Email ${founders.zhareal.name}`} linkedinLabel={`${founders.zhareal.name} on LinkedIn`} />
+        <PersonCard initial={founders.zakia.initial} label={founders.zakia.label} name={founders.zakia.name} role={founders.zakia.role} bio={founders.zakia.bio} accentColor={founders.zakia.accentColor} email={founders.zakia.email} linkedin={founders.zakia.linkedin} emailLabel={`Email ${founders.zakia.name}`} linkedinLabel={`${founders.zakia.name} on LinkedIn`} />
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><hr class="section-divider" /></div>
+
+  <!-- ===== PRESS ===== -->
+  <section class="press-section reveal" aria-labelledby="press-heading">
+    <div class="container">
+      <div class="section-header text-center">
+        <div class="eyebrow">RECOGNITION</div>
+        <h2 id="press-heading">As Seen &amp; Recognized</h2>
+        <div class="rule rule-centered"></div>
+      </div>
+      <div class="press-grid">
+        <div class="press-item"><span class="press-name">Oregon State University</span><span class="press-detail">Apparel Design — Alumni Feature</span></div>
+        <div class="press-item"><span class="press-name">Portland Fashion Scene</span><span class="press-detail">Emerging Designer Showcase</span></div>
+        <div class="press-item"><span class="press-name">NYC Fashion-Tech</span><span class="press-detail">Business &amp; Innovation</span></div>
+        <div class="press-item"><span class="press-name">Instagram Community</span><span class="press-detail">Growing Digital Presence</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NEWSLETTER ===== -->
+  <section class="newsletter-section" aria-labelledby="newsletter-heading">
+    <div class="newsletter-bg" aria-hidden="true"></div>
+    <div class="container newsletter-content reveal text-center">
+      <div class="eyebrow">STAY CONNECTED</div>
+      <h2 id="newsletter-heading">Join the Inner Circle</h2>
+      <p class="section-subtitle" style="margin: 0 auto var(--space-xl);">Be the first to know about new collections, exclusive drops, and the story behind every piece. No spam — just intention.</p>
+      <div class="newsletter-actions">
+        <a href="https://www.instagram.com/zh.adore/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Follow on Instagram</a>
+        <a href="mailto:Zhadoree@gmail.com?subject=Join%20ZHADORE%20Inner%20Circle" class="btn btn-ghost">Join via Email</a>
+      </div>
+      <p class="newsletter-hint">Or DM us <strong>@zh.adore</strong> on Instagram to connect directly.</p>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="contact-section reveal" id="contact" aria-labelledby="contact-heading">
+    <div class="container text-center">
+      <div class="eyebrow">GET IN TOUCH</div>
+      <h2 id="contact-heading">Let's Create Together</h2>
+      <p class="section-subtitle" style="margin: 0 auto var(--space-xl);">Custom pieces. Collaborations. Press inquiries.</p>
+      <div class="contact-list">
+        <ContactLink type="email" url="mailto:Zhadoree@gmail.com" display="Zhadoree@gmail.com" label="Email ZHADORE" />
+        <ContactLink type="instagram" url="https://www.instagram.com/zh.adore/" display="@zh.adore" label="ZHADORE on Instagram" target="_blank" rel="noopener noreferrer" />
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .text-center { text-align: center; }
+  .section-header { margin-bottom: var(--space-3xl); }
+  .section-header h2 { font-family: var(--font-serif); font-size: var(--text-3xl); font-weight: 700; margin: var(--space-md) 0; }
+
+  .themes-section {
+    padding: 0 0 var(--section-padding);
+    background: #080808;
+  }
+
+  .collection-shell {
+    background: #080808;
+    padding: 80px 52px 48px;
+    margin: 0 auto;
+    max-width: 1400px;
+  }
+
+  .collection-header {
+    text-align: center;
+    padding: 0 0 40px;
+  }
+
+  .collection-eyebrow {
+    font-size: 10px;
+    letter-spacing: 4px;
+    margin-bottom: 18px;
+    color: #c4913a;
+  }
+
+  .collection-header h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.2vw, 3rem);
+    font-style: italic;
+    color: #f4efe6;
+    margin: 0 0 12px;
+    line-height: 1.2;
+  }
+
+  .collection-subtitle {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(244, 239, 230, 0.4);
+    margin: 0;
+  }
+
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3px;
+    background: #080808;
+    padding: 0 0 3px;
+  }
+
+  .collection-cell,
+  .collection-spec-card {
+    position: relative;
+    overflow: hidden;
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .collection-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .collection-cell--photo {
+    aspect-ratio: 3 / 4;
+    cursor: pointer;
+  }
+
+  .collection-cell--group {
+    grid-column: 1 / -1;
+    aspect-ratio: 21 / 9;
+  }
+
+  .collection-cell--group img {
+    object-position: center 30%;
+  }
+
+  .collection-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 22px;
+    background: linear-gradient(to top, rgba(8, 8, 8, 0.92) 0%, rgba(8, 8, 8, 0.1) 55%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .collection-cell--photo:hover .collection-overlay,
+  .collection-cell--photo.is-active .collection-overlay {
+    opacity: 1;
+  }
+
+  .overlay-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #c4913a;
+    margin: 0 0 4px;
+    text-transform: uppercase;
+  }
+
+  .collection-overlay h3 {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    color: #f4efe6;
+    margin: 0 0 8px;
+    line-height: 1.2;
+  }
+
+  .collection-overlay p {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    line-height: 1.7;
+    color: rgba(244, 239, 230, 0.6);
+    margin: 0;
+  }
+
+  .overlay-line {
+    width: 28px;
+    height: 1px;
+    background: #c4913a;
+    margin-top: 10px;
+  }
+
+  .collection-spec-card {
+    padding: 32px 28px;
+    min-height: auto;
+  }
+
+  .spec-line {
+    width: 32px;
+    height: 1px;
+    background: #c4913a;
+    margin-bottom: 20px;
+  }
+
+  .collection-spec-card h3 {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    color: #f4efe6;
+    letter-spacing: 1px;
+    margin: 0 0 16px;
+    line-height: 1.25;
+  }
+
+  .spec-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 10px;
+  }
+
+  .spec-label {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: rgba(196, 145, 58, 0.8);
+    text-transform: uppercase;
+  }
+
+  .spec-value {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(244, 239, 230, 0.45);
+  }
+
+  @media (max-width: 900px) {
+    .collection-shell {
+      padding: 64px 24px 32px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .collection-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .collection-cell--group {
+      grid-column: 1 / -1;
+    }
+
+    .collection-header h2 {
+      font-size: clamp(1.8rem, 6vw, 2.4rem);
+    }
+
+    .collection-subtitle {
+      font-size: 13px;
+    }
+
+    .collection-overlay h3 {
+      font-size: 18px;
+    }
+
+    .collection-overlay p {
+      font-size: 10px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .collection-shell {
+      padding: 56px 16px 24px;
+    }
+
+    .collection-grid {
+      gap: 2px;
+    }
+
+    .collection-cell--photo {
+      aspect-ratio: 1 / 1.2;
+    }
+
+    .collection-spec-card {
+      padding: 24px 18px;
+    }
+  }
+
+  /* Featured Look */
+  .featured-section { padding: var(--section-padding) 0 0; }
+  .featured-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3xl); align-items: center; }
+  .featured-img-wrap { position: relative; overflow: hidden; }
+  .featured-img-wrap img { width: 100%; aspect-ratio: 3/4; object-fit: cover; transition: transform 0.8s cubic-bezier(0.4,0,0.2,1); }
+  .featured-img-wrap:hover img { transform: scale(1.03); }
+  .featured-badge { position: absolute; bottom: var(--space-lg); right: var(--space-lg); font-family: var(--font-serif); font-size: 64px; font-weight: 700; color: var(--color-gold); opacity: 0.6; line-height: 0.7; }
+  .featured-content h2 { font-family: var(--font-serif); font-size: var(--text-3xl); font-weight: 700; margin-bottom: var(--space-lg); line-height: 1.1; }
+  .featured-desc { font-size: var(--text-lg); line-height: var(--leading-relaxed); margin-bottom: var(--space-xl); }
+  .featured-meta { display: flex; gap: var(--space-xl); margin-bottom: var(--space-xl); padding: var(--space-lg); border: 1px solid var(--color-border); }
+  .meta-item { display: flex; flex-direction: column; gap: var(--space-xs); }
+  .meta-label { font-family: var(--font-sans); font-size: var(--text-xs); font-weight: 400; letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--color-gold); }
+  .meta-value { font-family: var(--font-serif); font-size: var(--text-lg); color: var(--color-text); }
+
+  /* Masonry */
+  .collection-glance { padding: var(--section-padding) 0 0; }
+  .masonry-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 200px; gap: var(--space-md); margin-top: var(--space-3xl); }
+  .masonry-item { margin: 0; overflow: hidden; position: relative; }
+  .masonry-large { grid-column: span 2; grid-row: span 2; }
+  .masonry-tall { grid-row: span 2; }
+  .masonry-wide { grid-column: span 2; }
+  .masonry-img-wrap { width: 100%; height: 100%; overflow: hidden; background: var(--color-bg-elevated); }
+  .masonry-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+  .masonry-item:hover .masonry-img-wrap img { transform: scale(1.05); }
+  .masonry-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 40%); opacity: 0; transition: opacity var(--transition-base); display: flex; flex-direction: column; justify-content: flex-end; padding: var(--space-lg); }
+  .masonry-item:hover .masonry-overlay { opacity: 1; }
+  .masonry-theme { font-family: var(--font-sans); font-size: var(--text-xs); font-weight: 500; letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--color-gold); }
+  .masonry-number { font-family: var(--font-serif); font-size: var(--text-lg); font-weight: 700; color: var(--color-text); }
+
+  /* Editorial */
+  .editorial-section { padding: var(--section-padding) 0; position: relative; overflow: hidden; }
+  .editorial-bg { position: absolute; inset: 0; background: var(--color-bg-elevated); clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%); }
+  .editorial-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 0.8fr 1.2fr; gap: var(--space-4xl); align-items: center; }
+  .editorial-visual { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+  .editorial-stack-img { overflow: hidden; }
+  .editorial-stack-img.main { grid-column: span 2; }
+  .editorial-stack-img img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 3/4; transition: transform 0.6s ease; }
+  .editorial-stack-img:hover img { transform: scale(1.04); }
+  .editorial-text h2 { font-family: var(--font-serif); font-size: var(--text-3xl); font-weight: 700; margin-bottom: var(--space-lg); line-height: 1.1; }
+  .editorial-quote { font-family: var(--font-serif); font-size: var(--text-2xl); font-style: italic; color: var(--color-gold-light); line-height: var(--leading-snug); margin: var(--space-xl) 0; padding-left: var(--space-lg); border-left: 2px solid var(--color-gold); }
+  .editorial-quote cite { display: block; font-family: var(--font-sans); font-size: var(--text-sm); font-style: normal; font-weight: 300; color: var(--color-text-muted); margin-top: var(--space-sm); letter-spacing: var(--tracking-wider); }
+  .editorial-text p { font-size: var(--text-lg); line-height: var(--leading-relaxed); margin-bottom: var(--space-lg); }
+
+  /* Craft */
+  .craft-section { padding: var(--section-padding) 0; }
+  .craft-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-lg); margin-bottom: var(--space-3xl); }
+  .craft-card { padding: var(--space-xl); border: 1px solid var(--color-border); transition: border-color var(--transition-base); }
+  .craft-card:hover { border-color: var(--color-gold-dim); }
+  .craft-icon { font-family: var(--font-serif); font-size: var(--text-2xl); font-weight: 700; color: var(--color-gold-dim); margin-bottom: var(--space-md); }
+  .craft-card h3 { font-family: var(--font-serif); font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-sm); }
+  .craft-card p { font-size: var(--text-sm); color: var(--color-text-muted); line-height: var(--leading-relaxed); }
+  .craft-images { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); }
+  .craft-img-wrap { overflow: hidden; aspect-ratio: 3/4; }
+  .craft-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .craft-img-wrap:hover img { transform: scale(1.04); }
+
+  /* About */
+  .about-section { padding: var(--section-padding) 0; }
+  .about-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); }
+
+  /* Press */
+  .press-section { padding: var(--section-padding) 0; }
+  .press-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-lg); }
+  .press-item { text-align: center; padding: var(--space-xl); border: 1px solid var(--color-border); transition: border-color var(--transition-base); }
+  .press-item:hover { border-color: var(--color-gold-dim); }
+  .press-name { display: block; font-family: var(--font-serif); font-size: var(--text-lg); font-weight: 700; color: var(--color-text); margin-bottom: var(--space-sm); }
+  .press-detail { font-family: var(--font-sans); font-size: var(--text-xs); font-weight: 300; color: var(--color-text-muted); letter-spacing: var(--tracking-wider); text-transform: uppercase; }
+
+  /* Newsletter */
+  .newsletter-section { padding: var(--section-padding) 0; position: relative; }
+  .newsletter-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(196,145,58,0.04) 0%, transparent 60%), var(--color-bg); }
+  .newsletter-content { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+  .newsletter-content h2 { font-family: var(--font-serif); font-size: var(--text-3xl); font-weight: 700; margin: var(--space-md) 0; }
+  .newsletter-actions { display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-lg); }
+  .newsletter-hint { font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: 0; }
+
+  /* Contact */
+  .contact-section { padding: var(--space-4xl) 0 var(--section-padding); }
+  .contact-list { display: flex; justify-content: center; gap: var(--space-xl); flex-wrap: wrap; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 1000px) { .masonry-grid { grid-template-columns: repeat(3,1fr); grid-auto-rows: 160px; } .craft-grid { grid-template-columns: repeat(2,1fr); } .press-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 768px) { .featured-grid { grid-template-columns: 1fr; gap: var(--space-xl); } .featured-content h2 { font-size: var(--text-2xl); } .featured-meta { flex-wrap: wrap; gap: var(--space-md); } .masonry-grid { grid-template-columns: repeat(2,1fr); grid-auto-rows: 140px; } .masonry-large, .masonry-wide { grid-column: span 2; } .editorial-grid { grid-template-columns: 1fr; gap: var(--space-xl); } .editorial-visual { order: -1; } .craft-grid { grid-template-columns: 1fr 1fr; } .craft-images { grid-template-columns: repeat(2,1fr); } .about-grid { grid-template-columns: 1fr; } .press-grid { grid-template-columns: 1fr 1fr; } .contact-list { flex-direction: column; align-items: center; } }
+  @media (max-width: 480px) { .masonry-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 120px; gap: var(--space-sm); } .craft-grid { grid-template-columns: 1fr; } .press-grid { grid-template-columns: 1fr; } .newsletter-actions { flex-direction: column; align-items: center; } }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .featured-img-wrap:hover img, .masonry-item:hover img, .editorial-stack-img:hover img, .craft-img-wrap:hover img { transform: none; } .masonry-item:hover .masonry-overlay { opacity: 0; } }
+</style>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }); }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  } else { reveals.forEach(el => el.classList.add('visible')); }
+</script>
+
+<script type="application/ld+json" set:html={`{"@context":"https://schema.org","@type":"Organization","name":"ZHADORE","url":"https://zhadore.com/","logo":"https://zhadore.com/favicon.svg","description":"Handmade luxury fashion brand. Handmade. Intentional. Worn like armor.","slogan":"Handmade. Intentional. Worn like armor.","email":"Zhadoree@gmail.com","foundingDate":"2025","founders":[{"@type":"Person","name":"Zhareal Popa","jobTitle":"Creative Director & Founder"},{"@type":"Person","name":"Zakia Yesmin","jobTitle":"Tech & Fashion · Builder"}],"sameAs":["https://www.instagram.com/zh.adore/","https://www.linkedin.com/in/zhareal-popa-/","https://www.linkedin.com/in/zakia-yesmin-061321308/"]}`} />
+
+<script type="application/ld+json" set:html={`{"@context":"https://schema.org","@type":"WebSite","name":"ZHADORE","url":"https://zhadore.com/","description":"Official website of ZHADORE — a handbuilt luxury fashion brand. Discover the AMBIVALENCE SS 2026 collection.","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://zhadore.com/search?q={search_term_string}"},"queryInput":"required name=search_term_string"}}`} />
